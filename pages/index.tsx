@@ -1,8 +1,29 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import * as React from 'react';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import ProjectCard from '../src/components/ProjectCard';
+import {getContributions} from '../src/lib/github/index';
+import { NextPage } from "next";
 
-export default function Home() {
+export async function getServerSideProps() {
+  const data = await getContributions('kristaps-m');
+  console.log(data);
+  return {
+    props: {username: data.data.user.name,
+    username2: data.data.user.contributionsCollection
+}, // will be passed to the page component as props
+  }
+}
+
+interface Props {
+  username: string;
+  username2: any;
+}
+
+const Home: NextPage<Props> = (props) => {
   return (
     <div className={styles.container}>
       <Head>
@@ -13,14 +34,28 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+          {props.username}
         </h1>
+        <h1> {props.username2[0]}</h1>
+        <h1> {props.username}</h1>
 
         <p className={styles.description}>
           Get started by editing{' '}
           <code className={styles.code}>pages/index.tsx</code>
         </p>
+        <Stack spacing={2} direction="row">
+      <Button variant="text">Text</Button>
+      <Button variant="contained">Contained</Button>
+      <Button variant="outlined">Outlined</Button>
+        </Stack>
+        {/* ------------------------CARD  */}
 
+       
+      <ProjectCard ></ProjectCard>
+      
+
+
+        {/* CARD */}
         <div className={styles.grid}>
           <a href="https://nextjs.org/docs" className={styles.card}>
             <h2>Documentation &rarr;</h2>
@@ -69,3 +104,5 @@ export default function Home() {
     </div>
   )
 }
+
+export default Home;
