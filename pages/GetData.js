@@ -29,4 +29,4 @@ async function getContributions(token, username) {
     return data
 }
 
-const data = await getContributions('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', 'kristaps-m')
+const data = await getContributions('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', 'kristaps-m')
