@@ -7,20 +7,21 @@ import Button from '@mui/material/Button';
 import ProjectCard from '../src/components/ProjectCard';
 import {getContributions} from '../src/lib/github/index';
 import { NextPage } from "next";
+import { color } from '@mui/system';
 
 export async function getServerSideProps() {
   const data = await getContributions('kristaps-m');
   console.log(data);
   return {
     props: {username: data.data.user.name,
-    username2: data.data.user.contributionsCollection
+    totalContributions: data.data.user.contributionsCollection.contributionCalendar.totalContributions
 }, // will be passed to the page component as props
   }
 }
 
 interface Props {
   username: string;
-  username2: any;
+  totalContributions: number
 }
 
 const Home: NextPage<Props> = (props) => {
@@ -33,11 +34,10 @@ const Home: NextPage<Props> = (props) => {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
+        <h1 className={styles.title}>Name of Developer: 
           {props.username}
         </h1>
-        <h1> {props.username2[0]}</h1>
-        <h1> {props.username}</h1>
+        <h2 style={{backgroundColor: 'lightblue', color: 'white'}}>Total Contributions: {props.totalContributions}</h2>
 
         <p className={styles.description}>
           Get started by editing{' '}

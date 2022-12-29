@@ -26,7 +26,8 @@ async function getContributions(token, username) {
     }
     const response = await fetch('https://api.github.com/graphql', { method: 'POST', body: JSON.stringify(body), headers: headers })
     const data = await response.json()
+
     return data
 }
 
-const data = await getContributions('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', 'kristaps-m')
+//const data = await getContributions('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', 'kristaps-m')

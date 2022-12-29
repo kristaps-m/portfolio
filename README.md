@@ -10,6 +10,35 @@ npm run dev
 yarn dev
 ```
 
+FIRST ? 24. novembris / coding-sessions
+https://www.youtube.com/watch?v=wdoCcJCciJw
+
+LAST ?8. decembris / coding-sessions
+https://www.youtube.com/watch?v=ZzRfURvxN7o
+
+https://drive.google.com/drive/folders/1ti72qs9rseSpftN67_OGmRTTD0xmtwOe
+https://stackoverflow.com/questions/18262288/finding-total-contributions-of-a-user-from-github-api
+https://docs.github.com/en/graphql/overview/explorer
+https://www.npmjs.com/package/react-activity-calendar 
+https://nextjs.org/docs/basic-features/data-fetching/get-server-side-props 
+
+```
+next.config.js priekš avatarUrl ielasīšanas
+const nextConfig = {
+  reactStrictMode: true,
+  swcMinify: true,
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com",
+        port: "",
+      },
+    ],
+  },
+};
+```
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.

@@ -1,4 +1,4 @@
-const key: string = "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";
+const key: string = "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";
 
 export const getContributions = async (username: string) => {
   const headers = {
@@ -32,5 +32,7 @@ export const getContributions = async (username: string) => {
     headers: headers,
   });
   const data = await response.json();
+  //console.log("---------TEST-----------");
+  //console.log(JSON.stringify(body));
   return data;
 };
