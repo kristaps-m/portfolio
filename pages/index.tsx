@@ -6,12 +6,15 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import ProjectCard from '../src/components/ProjectCard';
 import {getContributions} from '../src/lib/github/index';
+import GitHubAcitvity from '../src/lib/github/activity/GitHubActivity';
 import { NextPage } from "next";
 import { color } from '@mui/system';
+//import styled from "styled-components";
+import { GithubContributions } from "react-github-graph";
 
 export async function getServerSideProps() {
   const data = await getContributions('kristaps-m');
-  console.log(data);
+  //console.log(data);
   return {
     props: {username: data.data.user.name,
     totalContributions: data.data.user.contributionsCollection.contributionCalendar.totalContributions
@@ -38,6 +41,12 @@ const Home: NextPage<Props> = (props) => {
           {props.username}
         </h1>
         <h2 style={{backgroundColor: 'lightblue', color: 'white'}}>Total Contributions: {props.totalContributions}</h2>
+      
+      <h1>This is random activity</h1>      
+      <GitHubAcitvity/>
+
+      <h1>This is LEGIT activity</h1>      
+      <GithubContributions username="{kristaps-m}" />
 
         <p className={styles.description}>
           Get started by editing{' '}
@@ -48,12 +57,8 @@ const Home: NextPage<Props> = (props) => {
       <Button variant="contained">Contained</Button>
       <Button variant="outlined">Outlined</Button>
         </Stack>
-        {/* ------------------------CARD  */}
-
-       
-      <ProjectCard ></ProjectCard>
-      
-
+        {/* ------------------------CARD---------------------  */}       
+      <ProjectCard ></ProjectCard>    
 
         {/* CARD */}
         <div className={styles.grid}>

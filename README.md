@@ -19,8 +19,8 @@ https://www.youtube.com/watch?v=ZzRfURvxN7o
 https://drive.google.com/drive/folders/1ti72qs9rseSpftN67_OGmRTTD0xmtwOe
 https://stackoverflow.com/questions/18262288/finding-total-contributions-of-a-user-from-github-api
 https://docs.github.com/en/graphql/overview/explorer
-https://www.npmjs.com/package/react-activity-calendar 
-https://nextjs.org/docs/basic-features/data-fetching/get-server-side-props 
+https://www.npmjs.com/package/react-activity-calendar
+https://nextjs.org/docs/basic-features/data-fetching/get-server-side-props
 
 ```
 next.config.js priekš avatarUrl ielasīšanas
@@ -38,6 +38,13 @@ const nextConfig = {
   },
 };
 ```
+
+### Installations
+
+npm install moment
+npm install react-github-graph
+npm i styled-components
+npm install --save-dev @types/styled-components
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
