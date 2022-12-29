@@ -11,13 +11,15 @@ import { NextPage } from "next";
 import { color } from '@mui/system';
 //import styled from "styled-components";
 import { GithubContributions } from "react-github-graph";
+import GitHubCalendar from 'react-github-calendar';
 
 export async function getServerSideProps() {
   const data = await getContributions('kristaps-m');
   //console.log(data);
   return {
     props: {username: data.data.user.name,
-    totalContributions: data.data.user.contributionsCollection.contributionCalendar.totalContributions
+    totalContributions: data.data.user.contributionsCollection.contributionCalendar.totalContributions,
+    avatarUrl: data.data.user.avatarUrl
 }, // will be passed to the page component as props
   }
 }
@@ -25,9 +27,12 @@ export async function getServerSideProps() {
 interface Props {
   username: string;
   totalContributions: number
+  avatarUrl: string
 }
 
 const Home: NextPage<Props> = (props) => {
+  const imgLink = props.avatarUrl
+
   return (
     <div className={styles.container}>
       <Head>
@@ -37,16 +42,29 @@ const Home: NextPage<Props> = (props) => {
       </Head>
 
       <main className={styles.main}>
+        <img src={props.avatarUrl} alt="Avatar Image :)"  width={200}/>
+
         <h1 className={styles.title}>Name of Developer: 
           {props.username}
         </h1>
         <h2 style={{backgroundColor: 'lightblue', color: 'white'}}>Total Contributions: {props.totalContributions}</h2>
-      
-      <h1>This is random activity</h1>      
-      <GitHubAcitvity/>
+      <div style={{backgroundColor: 'lightgray'}}>
+        <h1>This is random activity</h1>      
+        <GitHubAcitvity/>
+      </div>
+        <br/>
+      <div style={{backgroundColor: 'lightgray'}}>
+        <h1>This is LEGIT activity</h1>    
+        <p style={{color: 'darkblue'}}><a href="https://grubersjoe.github.io/react-github-calendar/?ref=madewithreactjs.com">https://grubersjoe.github.io/react-github-calendar/?ref=madewithreactjs.com</a></p>  
+        <GitHubCalendar username="kristaps-m" />
+      </div>
+        <br/>
+      <div style={{backgroundColor: 'lightgray'}}>
+        <h1>This is LEGIT activity #2</h1>    
+        <p style={{color: 'darkblue'}}><a href="https://www.npmjs.com/package/react-github-graph">https://www.npmjs.com/package/react-github-graph</a></p>  
+        <GithubContributions username="{kristaps-m}" />
+      </div>
 
-      <h1>This is LEGIT activity</h1>      
-      <GithubContributions username="{kristaps-m}" />
 
         <p className={styles.description}>
           Get started by editing{' '}

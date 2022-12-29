@@ -8,6 +8,7 @@ export const getContributions = async (username: string) => {
     query: `query {
             user(login: "${username}") {
               name
+              avatarUrl
               contributionsCollection {
                 contributionCalendar {
                   colors
