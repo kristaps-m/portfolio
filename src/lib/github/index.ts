@@ -6,26 +6,42 @@ export const getContributions = async (username: string) => {
   };
   const body = {
     query: `query {
-            user(login: "${username}") {
-              name
-              avatarUrl
-              contributionsCollection {
-                contributionCalendar {
-                  colors
-                  totalContributions
-                  weeks {
-                    contributionDays {
-                      color
-                      contributionCount
-                      date
-                      weekday
+              user(login: "${username}") {
+                name
+                login
+                avatarUrl
+                contributionsCollection {
+                  contributionCalendar {
+                    colors
+                    totalContributions
+                    weeks {
+                      contributionDays {
+                        color
+                        contributionCount
+                        date
+                        weekday
+                      }
+                      firstDay
                     }
-                    firstDay
+                  }
+                }
+                repositories(first: 100){
+                  nodes {
+                    name
+                    url
+                    
+                    languages(first: 5)
+                    {
+                      edges {
+                        node {
+                          name
+                        }
+                      }
+                    }
                   }
                 }
               }
-            }
-          }`,
+            }`,
   };
   const response = await fetch("https://api.github.com/graphql", {
     method: "POST",

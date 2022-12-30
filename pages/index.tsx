@@ -19,7 +19,8 @@ export async function getServerSideProps() {
   return {
     props: {username: data.data.user.name,
     totalContributions: data.data.user.contributionsCollection.contributionCalendar.totalContributions,
-    avatarUrl: data.data.user.avatarUrl
+    avatarUrl: data.data.user.avatarUrl,
+    projectUrl: data.data.user.repositories.nodes[0].url
 }, // will be passed to the page component as props
   }
 }
@@ -28,6 +29,7 @@ interface Props {
   username: string;
   totalContributions: number
   avatarUrl: string
+  projectUrl: string
 }
 
 const Home: NextPage<Props> = (props) => {
@@ -43,7 +45,7 @@ const Home: NextPage<Props> = (props) => {
 
       <main className={styles.main}>
         <img src={props.avatarUrl} alt="Avatar Image :)"  width={200}/>
-
+        <h1>{props.projectUrl}</h1>
         <h1 className={styles.title}>Name of Developer: 
           {props.username}
         </h1>
