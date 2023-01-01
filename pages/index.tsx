@@ -12,6 +12,8 @@ import { color } from '@mui/system';
 //import styled from "styled-components";
 import { GithubContributions } from "react-github-graph";
 import GitHubCalendar from 'react-github-calendar';
+import axios, { AxiosError } from 'axios';
+import * as cheerio from 'cheerio';
 
 export async function getServerSideProps() {
   const data = await getContributions('kristaps-m');
@@ -20,7 +22,8 @@ export async function getServerSideProps() {
     props: {username: data.data.user.name,
     totalContributions: data.data.user.contributionsCollection.contributionCalendar.totalContributions,
     avatarUrl: data.data.user.avatarUrl,
-    projectUrl: data.data.user.repositories.nodes[0].url
+    projectUrl: data.data.user.repositories.nodes,
+    theRepoName: data.data.user.repositories.nodes,
 }, // will be passed to the page component as props
   }
 }
@@ -29,11 +32,89 @@ interface Props {
   username: string;
   totalContributions: number
   avatarUrl: string
-  projectUrl: string
+  projectUrl: any
+  theRepoName: any[]
 }
 
+// function fetchPage(url: string): Promise<string | undefined> {
+//   const HTMLData = axios
+//     .get(url)
+//     .then(res => res.data)
+//     .catch((error: AxiosError) => {
+//       console.error(`There was an error with ${error.config.url}.`);
+//       console.error(error.toJSON());
+//     });
+
+//   return HTMLData;
+// }
+
+let theUrl = "https://raw.githubusercontent.com/kristaps-m/ycombinator-data-scraper/master/portfolio.yml";
+let theUrl2 = "https://raw.githubusercontent.com/kristaps-m/Python/master/portfolio.yml";
+
+function testYolo(urlIn:any){
+  let listOfData: any[] = [];
+
+  for (let index = 0; index < urlIn.length; index++) {
+    const theName = urlIn[index].name;
+    theUrl = `https://raw.githubusercontent.com/kristaps-m/${theName}/master/portfolio.yml`;
+    axios.get(theUrl)
+    .then((response) => {
+        if(response.status === 200) {
+        const html = response.data;
+            //const giveMeHtml = cheerio.load(html); 
+            console.log("This should be html \n",html.toString());
+            listOfData.push(html.toString());            
+            //return html;
+    }
+    }, (error) => console.log(error) );
+  }
+
+  return listOfData;
+}
+
+// axios.get(theUrl)
+//     .then((response) => {
+//         if(response.status === 200) {
+//         const html = response.data;
+//             const giveMeHtml = cheerio.load(html); 
+//             console.log("This should be html \n",html);
+//     }
+//     }, (error) => console.log(error) );
+
+
+//console.log(fetchPage(theUrl));
+
+// async function getTEST(){
+
+//   const data = await getContributions('kristaps-m');
+
+//   let arrayOfNodes = data.data.user.repositories.nodes;
+
+//   for (let index = 0; index < arrayOfNodes.length; index++) {
+//     const element = arrayOfNodes[index];
+
+//     listOfUrls.push(element.url);
+    
+//   }
+
+//   return listOfUrls;
+// }
+
+// console.log("FAK", listOfUrls[0]);
+
 const Home: NextPage<Props> = (props) => {
-  const imgLink = props.avatarUrl
+  let listOfUrls: string[] = [];
+
+  for (let index = 0; index < props.projectUrl.length; index++) {
+    const element = props.projectUrl[index];
+
+    listOfUrls.push(element.url);  
+  }
+
+  const dataFromYamlFile = testYolo(props.theRepoName)
+  console.log("This is data from dataFromYamlFile \n", dataFromYamlFile);
+// https://raw.githubusercontent.com/kristaps-m/ycombinator-data-scraper/master/portfolio.yml
+
 
   return (
     <div className={styles.container}>
@@ -45,7 +126,12 @@ const Home: NextPage<Props> = (props) => {
 
       <main className={styles.main}>
         <img src={props.avatarUrl} alt="Avatar Image :)"  width={200}/>
-        <h1>{props.projectUrl}</h1>
+        <img src="https://raw.githubusercontent.com/kristaps-m/ycombinator-data-scraper/master/portfolio/image-small.png" alt="Avatar Image :)"  width={200}/>
+        {/* <h1>{props.projectUrl}</h1> */}
+        <h3>{listOfUrls[0]}</h3>
+        {/* <h3>Repo Name: {props.theRepoName}</h3> */}
+        <h3>{dataFromYamlFile[0]}</h3>
+        {/* <div>{listOfUrls.map(oneUrl => <p>{oneUrl}</p>)}</div> */}
         <h1 className={styles.title}>Name of Developer: 
           {props.username}
         </h1>
