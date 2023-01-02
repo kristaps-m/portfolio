@@ -14,10 +14,17 @@ import { GithubContributions } from "react-github-graph";
 import GitHubCalendar from 'react-github-calendar';
 import axios, { AxiosError } from 'axios';
 import * as cheerio from 'cheerio';
+import { forEachChild } from 'typescript';
 
 export async function getServerSideProps() {
   const data = await getContributions('kristaps-m');
-  //console.log(data);
+  // console.log(data, "This is data");
+  // const nodesList = data.data.user.repositories.nodes;
+
+  // for (let index = 0; index < nodesList.length; index++) {
+  //   listOfRepoNames.push(nodesList[index].name);
+  // }
+
   return {
     props: {username: data.data.user.name,
     totalContributions: data.data.user.contributionsCollection.contributionCalendar.totalContributions,
@@ -36,6 +43,28 @@ interface Props {
   theRepoName: any[]
 }
 
+let listOfRepoNames: string[] = [];
+
+// async function testGetNames(){
+//   let listOfRepoNames: string[] = [];
+
+//   const data = await getContributions('kristaps-m');
+//   console.log(data, "This is data");
+//   const nodesList = data.data.user.repositories.nodes;
+
+//   for (let index = 0; index < nodesList.length; index++) {
+//     listOfRepoNames.push(nodesList[index].name);
+//   }
+
+//   return listOfRepoNames;
+// }
+// let listOfRepoNames = testGetNames();
+
+// const asyncFilter = async (arr:any, predicate:any) => Promise.all(arr.map(predicate))
+// 	.then((results) => arr.filter((_v:any, index:any) => results[index]));
+
+
+// console.log(asyncFilter(listOfRepoNames, ""), "This is list of names of repositories");
 // function fetchPage(url: string): Promise<string | undefined> {
 //   const HTMLData = axios
 //     .get(url)
@@ -51,26 +80,26 @@ interface Props {
 let theUrl = "https://raw.githubusercontent.com/kristaps-m/ycombinator-data-scraper/master/portfolio.yml";
 let theUrl2 = "https://raw.githubusercontent.com/kristaps-m/Python/master/portfolio.yml";
 
-function testYolo(urlIn:any){
-  let listOfData: any[] = [];
+// function testYolo(urlIn:any){
+//   let listOfData: any[] = [];
 
-  for (let index = 0; index < urlIn.length; index++) {
-    const theName = urlIn[index].name;
-    theUrl = `https://raw.githubusercontent.com/kristaps-m/${theName}/master/portfolio.yml`;
-    axios.get(theUrl)
-    .then((response) => {
-        if(response.status === 200) {
-        const html = response.data;
-            //const giveMeHtml = cheerio.load(html); 
-            console.log("This should be html \n",html.toString());
-            listOfData.push(html.toString());            
-            //return html;
-    }
-    }, (error) => console.log(error) );
-  }
+//   for (let index = 0; index < urlIn.length; index++) {
+//     const theName = urlIn[index].name;
+//     theUrl = `https://raw.githubusercontent.com/kristaps-m/${theName}/master/portfolio.yml`;
+//     axios.get(theUrl)
+//     .then((response) => {
+//         if(response.status === 200) {
+//         const html = response.data;
+//             //const giveMeHtml = cheerio.load(html); 
+//             console.log("This should be html \n",html.toString());
+//             listOfData.push(html.toString());            
+//             //return html;
+//     }
+//     }, (error) => console.log(error) );
+//   }
 
-  return listOfData;
-}
+//   return listOfData;
+// }
 
 // axios.get(theUrl)
 //     .then((response) => {
@@ -111,8 +140,13 @@ const Home: NextPage<Props> = (props) => {
     listOfUrls.push(element.url);  
   }
 
-  const dataFromYamlFile = testYolo(props.theRepoName)
-  console.log("This is data from dataFromYamlFile \n", dataFromYamlFile);
+  for (let index = 0; index < props.theRepoName.length; index++) {
+    listOfRepoNames.push(props.theRepoName[index].name);
+  }
+
+  //const dataFromYamlFile = testYolo(props.theRepoName)
+  //console.log("This is data from dataFromYamlFile \n", dataFromYamlFile, dataFromYamlFile.length);
+  
 // https://raw.githubusercontent.com/kristaps-m/ycombinator-data-scraper/master/portfolio.yml
 
 
@@ -129,8 +163,9 @@ const Home: NextPage<Props> = (props) => {
         <img src="https://raw.githubusercontent.com/kristaps-m/ycombinator-data-scraper/master/portfolio/image-small.png" alt="Avatar Image :)"  width={200}/>
         {/* <h1>{props.projectUrl}</h1> */}
         <h3>{listOfUrls[0]}</h3>
+        <h3>This is name of repo: {listOfRepoNames[0]}</h3>
         {/* <h3>Repo Name: {props.theRepoName}</h3> */}
-        <h3>{dataFromYamlFile[0]}</h3>
+        {/* <h3>{dataFromYamlFile}</h3> */}
         {/* <div>{listOfUrls.map(oneUrl => <p>{oneUrl}</p>)}</div> */}
         <h1 className={styles.title}>Name of Developer: 
           {props.username}
