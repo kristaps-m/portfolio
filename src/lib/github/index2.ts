@@ -5,7 +5,7 @@ export const getContributions2 = async (username: string, repoName: string) => {
     Authorization: `bearer ${key}`,
   };
   const body = {
-    query: `query RepoFiles($owner: String!, $name: String!) {
+    query: `query {
   repository(owner: ${username}, name: ${repoName}) {
     object(expression: "HEAD:") {
       ... on Tree {

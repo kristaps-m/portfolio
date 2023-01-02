@@ -6,6 +6,7 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import ProjectCard from '../src/components/ProjectCard';
 import {getContributions} from '../src/lib/github/index';
+import {getContributions2} from '../src/lib/github/index2';
 import GitHubAcitvity from '../src/lib/github/activity/GitHubActivity';
 import { NextPage } from "next";
 import { color } from '@mui/system';
@@ -18,6 +19,9 @@ import { forEachChild } from 'typescript';
 
 export async function getServerSideProps() {
   const data = await getContributions('kristaps-m');
+  const data2 = await getContributions2('kristaps-m', "ycombinator-data-scraper");
+  //console.log(data);
+  console.log(data2);
   // console.log(data, "This is data");
   // const nodesList = data.data.user.repositories.nodes;
 
@@ -31,6 +35,7 @@ export async function getServerSideProps() {
     avatarUrl: data.data.user.avatarUrl,
     projectUrl: data.data.user.repositories.nodes,
     theRepoName: data.data.user.repositories.nodes,
+    //testData2: data2.data.repository.object.entries
 }, // will be passed to the page component as props
   }
 }
@@ -41,6 +46,7 @@ interface Props {
   avatarUrl: string
   projectUrl: any
   theRepoName: any[]
+  //testData2: any[]
 }
 
 let listOfRepoNames: string[] = [];
@@ -164,6 +170,7 @@ const Home: NextPage<Props> = (props) => {
         {/* <h1>{props.projectUrl}</h1> */}
         <h3>{listOfUrls[0]}</h3>
         <h3>This is name of repo: {listOfRepoNames[0]}</h3>
+        {/* <h3>This data2: {props.testData2[0].name}</h3> */}
         {/* <h3>Repo Name: {props.theRepoName}</h3> */}
         {/* <h3>{dataFromYamlFile}</h3> */}
         {/* <div>{listOfUrls.map(oneUrl => <p>{oneUrl}</p>)}</div> */}
