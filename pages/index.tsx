@@ -173,6 +173,7 @@ const Home: NextPage<Props> = (props) => {
   
 // https://raw.githubusercontent.com/kristaps-m/ycombinator-data-scraper/master/portfolio.yml
 
+  const smallP_L = "https://raw.githubusercontent.com/kristaps-m/ycombinator-data-scraper/master/portfolio/image-small.png";
 
   return (
     <div className={styles.container}>
@@ -184,7 +185,7 @@ const Home: NextPage<Props> = (props) => {
 
       <main className={styles.main}>
         <img src={props.avatarUrl} alt="Avatar Image :)"  width={200}/>
-        <img src="https://raw.githubusercontent.com/kristaps-m/ycombinator-data-scraper/master/portfolio/image-small.png" alt="Avatar Image :)"  width={200}/>
+        <img src={smallP_L} alt="Avatar Image :)"  width={200}/>
         {/* <h1>{props.projectUrl}</h1> */}
         <h3>This is text from yaml file: {theListOfTexts[0]}</h3>
         <h3>{listOfUrls[0]}</h3>
@@ -221,7 +222,7 @@ const Home: NextPage<Props> = (props) => {
       <Button variant="outlined">Outlined</Button>
         </Stack>
         {/* ------------------------CARD---------------------  */}       
-      <ProjectCard textFromYaml={theListOfTexts[0]}></ProjectCard>
+      <ProjectCard textFromYaml={theListOfTexts[0]} smallPictureLink={smallP_L}></ProjectCard>
 
         {/* CARD  textFromYaml = {{theListOfTexts[0]}}*/}
         <div className={styles.grid}>

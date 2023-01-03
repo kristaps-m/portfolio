@@ -10,15 +10,18 @@ import Typography from '@mui/material/Typography';
 
 interface CardContent{
   textFromYaml: string
+  smallPictureLink: string
 }
 
-export default function MediaCard({textFromYaml} : CardContent) {
+export default function MediaCard({textFromYaml,smallPictureLink} : CardContent) {
+
+  console.log(smallPictureLink, "Shoule be img link");
   return (
     <Card sx={{ maxWidth: 345 }} style={{backgroundColor: 'pink'}}>
       <CardMedia
         component="img"
         height="250" 
-        image="https://picsum.photos/id/237/200/300"
+        image={smallPictureLink}
         alt="green iguana"
       />
       <CardContent>
