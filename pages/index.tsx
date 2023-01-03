@@ -16,6 +16,7 @@ import GitHubCalendar from 'react-github-calendar';
 import axios, { AxiosError } from 'axios';
 import * as cheerio from 'cheerio';
 import { forEachChild } from 'typescript';
+import { type } from 'os';
 
 export async function getServerSideProps() {
   let data = await getContributions('kristaps-m');
@@ -150,7 +151,7 @@ const Home: NextPage<Props> = (props) => {
   }
 
   // The ultimate filter:
-  let theListOfTexts: string[] = [];
+  let theListOfTexts: any = [];
 
   for (let index = 0; index < props.getTheThingWeNeed.length; index++) {
     if(props.getTheThingWeNeed[index].object.entries.length > 0) {
@@ -163,7 +164,9 @@ const Home: NextPage<Props> = (props) => {
     }
   }
 
-  let oneItem: string = theListOfTexts[0];
+  theListOfTexts.push("Test added applle is my goeat");
+  console.log(theListOfTexts);
+  console.log(theListOfTexts[0],typeof theListOfTexts[0]);
 
   //const dataFromYamlFile = testYolo(props.theRepoName)
   //console.log("This is data from dataFromYamlFile \n", dataFromYamlFile, dataFromYamlFile.length);
@@ -218,7 +221,7 @@ const Home: NextPage<Props> = (props) => {
       <Button variant="outlined">Outlined</Button>
         </Stack>
         {/* ------------------------CARD---------------------  */}       
-      <ProjectCard textFromYaml={{oneItem}}></ProjectCard>
+      <ProjectCard textFromYaml={theListOfTexts[0]}></ProjectCard>
 
         {/* CARD  textFromYaml = {{theListOfTexts[0]}}*/}
         <div className={styles.grid}>

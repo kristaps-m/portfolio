@@ -8,7 +8,11 @@ import Typography from '@mui/material/Typography';
 
 // image = "/static/images/cards/contemplative-reptile.jpg"
 
-export default function MediaCard(textFromYaml: any) {
+interface CardContent{
+  textFromYaml: string
+}
+
+export default function MediaCard({textFromYaml} : CardContent) {
   return (
     <Card sx={{ maxWidth: 345 }} style={{backgroundColor: 'pink'}}>
       <CardMedia
