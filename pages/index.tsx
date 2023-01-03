@@ -17,6 +17,7 @@ import axios, { AxiosError } from 'axios';
 import * as cheerio from 'cheerio';
 import { forEachChild } from 'typescript';
 import { type } from 'os';
+import { Container, Grid } from '@mui/material';
 
 export async function getServerSideProps() {
   let data = await getContributions('kristaps-m');
@@ -164,7 +165,6 @@ const Home: NextPage<Props> = (props) => {
     }
   }
 
-  theListOfTexts.push("Test added applle is my goeat");
   console.log(theListOfTexts);
   console.log(theListOfTexts[0],typeof theListOfTexts[0]);
 
@@ -221,7 +221,16 @@ const Home: NextPage<Props> = (props) => {
       <Button variant="contained">Contained</Button>
       <Button variant="outlined">Outlined</Button>
         </Stack>
-        {/* ------------------------CARD---------------------  */}       
+        {/* ------------------------CARD---------------------  */}   
+      <Container>
+        <Grid container>
+          {theListOfTexts.map((item:any, index:number) =>(
+            <Grid key={index} xs={6} md={6} lg={4}>
+              <ProjectCard textFromYaml={theListOfTexts[index]} smallPictureLink={smallP_L}></ProjectCard>
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
       <ProjectCard textFromYaml={theListOfTexts[0]} smallPictureLink={smallP_L}></ProjectCard>
 
         {/* CARD  textFromYaml = {{theListOfTexts[0]}}*/}
