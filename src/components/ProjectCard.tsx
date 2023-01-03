@@ -11,9 +11,10 @@ import Typography from '@mui/material/Typography';
 interface CardContent{
   textFromYaml: string
   smallPictureLink: string
+  projectName: string
 }
 
-export default function MediaCard({textFromYaml,smallPictureLink} : CardContent) {
+export default function MediaCard({textFromYaml,smallPictureLink,projectName} : CardContent) {
 
   console.log(smallPictureLink, "Shoule be img link");
   return (
@@ -26,10 +27,10 @@ export default function MediaCard({textFromYaml,smallPictureLink} : CardContent)
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          Lizard
+          {projectName}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          Lizards: ... {textFromYaml}
+          {textFromYaml}
         </Typography>
       </CardContent>
       <CardActions>

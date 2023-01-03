@@ -157,16 +157,29 @@ const Home: NextPage<Props> = (props) => {
   for (let index = 0; index < props.getTheThingWeNeed.length; index++) {
     if(props.getTheThingWeNeed[index].object.entries.length > 0) {
       let test = props.getTheThingWeNeed[index].object.entries;
+      let oneRepoObject = {
+        repoName:'',
+        ymlText: '',
+        smallPicUrl:'',
+      };
+      oneRepoObject['repoName'] = props.getTheThingWeNeed[index].name;
+      oneRepoObject['smallPicUrl'] = `https://raw.githubusercontent.com/kristaps-m/${oneRepoObject['repoName']}/master/portfolio/image-small.png`
+      
       for (let j = 0; j < test.length; j++) {
         if(test[j].name === "portfolio.yml"){
-          theListOfTexts.push(test[j].object.text);
+          oneRepoObject['ymlText'] = test[j].object.text;          
+          
+          console.log(oneRepoObject)
+          theListOfTexts.push(oneRepoObject); // test[j].object.text
         }
       }
     }
   }
 
-  console.log(theListOfTexts);
-  console.log(theListOfTexts[0],typeof theListOfTexts[0]);
+  //console.log(theListOfTexts);
+  //console.log(theListOfTexts[0],typeof theListOfTexts[0]);
+
+  //theListOfTexts = JSON.stringify(theListOfTexts);
 
   //const dataFromYamlFile = testYolo(props.theRepoName)
   //console.log("This is data from dataFromYamlFile \n", dataFromYamlFile, dataFromYamlFile.length);
@@ -185,9 +198,9 @@ const Home: NextPage<Props> = (props) => {
 
       <main className={styles.main}>
         <img src={props.avatarUrl} alt="Avatar Image :)"  width={200}/>
-        <img src={smallP_L} alt="Avatar Image :)"  width={200}/>
+        {/* <img src={smallP_L} alt="Avatar Image :)"  width={200}/> */}
         {/* <h1>{props.projectUrl}</h1> */}
-        <h3>This is text from yaml file: {theListOfTexts[0]}</h3>
+        {/* <h3>This is text from yaml file: {theListOfTexts[0]}</h3> */}
         <h3>{listOfUrls[0]}</h3>
         <h3>This is name of repo: {listOfRepoNames[0]}</h3>
         <h1 className={styles.title}>Name of Developer: 
@@ -224,14 +237,14 @@ const Home: NextPage<Props> = (props) => {
         {/* ------------------------CARD---------------------  */}   
       <Container>
         <Grid container>
-          {theListOfTexts.map((item:any, index:number) =>(
-            <Grid key={index} xs={6} md={6} lg={4}>
-              <ProjectCard textFromYaml={theListOfTexts[index]} smallPictureLink={smallP_L}></ProjectCard>
+          {theListOfTexts.map((item: { ymlText: string; smallPicUrl: string; repoName: string}) =>(
+            <Grid key={item.ymlText} xs={6} md={6} lg={4}>
+              <ProjectCard textFromYaml={item.ymlText} smallPictureLink={item.smallPicUrl} projectName={item.repoName}></ProjectCard>
             </Grid>
           ))}
         </Grid>
       </Container>
-      <ProjectCard textFromYaml={theListOfTexts[0]} smallPictureLink={smallP_L}></ProjectCard>
+      {/* <ProjectCard textFromYaml={theListOfTexts[0]} smallPictureLink={smallP_L}></ProjectCard> */}
 
         {/* CARD  textFromYaml = {{theListOfTexts[0]}}*/}
         <div className={styles.grid}>
