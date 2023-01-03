@@ -18,10 +18,10 @@ import * as cheerio from 'cheerio';
 import { forEachChild } from 'typescript';
 
 export async function getServerSideProps() {
-  const data = await getContributions('kristaps-m');
-  const data2 = await getContributions2('kristaps-m', "ycombinator-data-scraper");
+  let data = await getContributions('kristaps-m');
+  //const data2 = await getContributions2('kristaps-m', "ycombinator-data-scraper");
   //console.log(data);
-  console.log(data2);
+  //console.log(data2);
   // console.log(data, "This is data");
   // const nodesList = data.data.user.repositories.nodes;
 
@@ -35,6 +35,7 @@ export async function getServerSideProps() {
     avatarUrl: data.data.user.avatarUrl,
     projectUrl: data.data.user.repositories.nodes,
     theRepoName: data.data.user.repositories.nodes,
+    getTheThingWeNeed: data.data.user.repositories.nodes,
     //testData2: data2.data.repository.object.entries
 }, // will be passed to the page component as props
   }
@@ -46,6 +47,7 @@ interface Props {
   avatarUrl: string
   projectUrl: any
   theRepoName: any[]
+  getTheThingWeNeed: any[]
   //testData2: any[]
 }
 
@@ -117,8 +119,6 @@ let theUrl2 = "https://raw.githubusercontent.com/kristaps-m/Python/master/portfo
 //     }, (error) => console.log(error) );
 
 
-//console.log(fetchPage(theUrl));
-
 // async function getTEST(){
 
 //   const data = await getContributions('kristaps-m');
@@ -135,7 +135,6 @@ let theUrl2 = "https://raw.githubusercontent.com/kristaps-m/Python/master/portfo
 //   return listOfUrls;
 // }
 
-// console.log("FAK", listOfUrls[0]);
 
 const Home: NextPage<Props> = (props) => {
   let listOfUrls: string[] = [];
@@ -149,6 +148,22 @@ const Home: NextPage<Props> = (props) => {
   for (let index = 0; index < props.theRepoName.length; index++) {
     listOfRepoNames.push(props.theRepoName[index].name);
   }
+
+  // The ultimate filter:
+  let theListOfTexts: string[] = [];
+
+  for (let index = 0; index < props.getTheThingWeNeed.length; index++) {
+    if(props.getTheThingWeNeed[index].object.entries.length > 0) {
+      let test = props.getTheThingWeNeed[index].object.entries;
+      for (let j = 0; j < test.length; j++) {
+        if(test[j].name === "portfolio.yml"){
+          theListOfTexts.push(test[j].object.text);
+        }
+      }
+    }
+  }
+
+  let oneItem: string = theListOfTexts[0];
 
   //const dataFromYamlFile = testYolo(props.theRepoName)
   //console.log("This is data from dataFromYamlFile \n", dataFromYamlFile, dataFromYamlFile.length);
@@ -168,12 +183,9 @@ const Home: NextPage<Props> = (props) => {
         <img src={props.avatarUrl} alt="Avatar Image :)"  width={200}/>
         <img src="https://raw.githubusercontent.com/kristaps-m/ycombinator-data-scraper/master/portfolio/image-small.png" alt="Avatar Image :)"  width={200}/>
         {/* <h1>{props.projectUrl}</h1> */}
+        <h3>This is text from yaml file: {theListOfTexts[0]}</h3>
         <h3>{listOfUrls[0]}</h3>
         <h3>This is name of repo: {listOfRepoNames[0]}</h3>
-        {/* <h3>This data2: {props.testData2[0].name}</h3> */}
-        {/* <h3>Repo Name: {props.theRepoName}</h3> */}
-        {/* <h3>{dataFromYamlFile}</h3> */}
-        {/* <div>{listOfUrls.map(oneUrl => <p>{oneUrl}</p>)}</div> */}
         <h1 className={styles.title}>Name of Developer: 
           {props.username}
         </h1>
@@ -206,9 +218,9 @@ const Home: NextPage<Props> = (props) => {
       <Button variant="outlined">Outlined</Button>
         </Stack>
         {/* ------------------------CARD---------------------  */}       
-      <ProjectCard ></ProjectCard>    
+      <ProjectCard textFromYaml={{oneItem}}></ProjectCard>
 
-        {/* CARD */}
+        {/* CARD  textFromYaml = {{theListOfTexts[0]}}*/}
         <div className={styles.grid}>
           <a href="https://nextjs.org/docs" className={styles.card}>
             <h2>Documentation &rarr;</h2>

@@ -25,11 +25,23 @@ export const getContributions = async (username: string) => {
                     }
                   }
                 }
-                repositories(first: 100){
-                  nodes {
+                repositories(privacy:PUBLIC, first: 100){      						
+                  nodes {                    
                     name
                     url
-                    
+                    visibility
+										object(expression: "HEAD:") {
+										        ... on Tree {
+                      entries {
+                        name
+                        object {
+                          ... on Blob {
+                            text
+                          }
+                        }
+                      }
+                    }
+										}
                     languages(first: 5)
                     {
                       edges {
@@ -40,6 +52,7 @@ export const getContributions = async (username: string) => {
                     }
                   }
                 }
+    						
               }
             }`,
   };

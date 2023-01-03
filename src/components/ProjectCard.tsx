@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 
 // image = "/static/images/cards/contemplative-reptile.jpg"
 
-export default function MediaCard() {
+export default function MediaCard(textFromYaml: any) {
   return (
     <Card sx={{ maxWidth: 345 }} style={{backgroundColor: 'pink'}}>
       <CardMedia
@@ -22,8 +22,7 @@ export default function MediaCard() {
           Lizard
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          Lizards are a widespread group of squamate reptiles, with over 6,000
-          species, ranging across all continents except Antarctica
+          Lizards: ... {textFromYaml}
         </Typography>
       </CardContent>
       <CardActions>
