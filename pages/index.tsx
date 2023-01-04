@@ -243,7 +243,8 @@ const Home: NextPage<Props> = (props) => {
         {/* ------------------------CARD---------------------  */}   
       <Container>
         <Grid container>
-          {theListOfTexts.map((item: { ymlText: string; smallPicUrl: string; repoName: string}) =>(
+          {theListOfTexts.map((item: {
+            progLangs: object[]; ymlText: string; smallPicUrl: string; repoName: string}) =>(
             <Grid key={item.ymlText} xs={6} md={6} lg={4}>
               <ProjectCard textFromYaml={item.ymlText}
                smallPictureLink={item.smallPicUrl} 

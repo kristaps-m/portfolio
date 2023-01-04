@@ -16,40 +16,48 @@ interface CardContent{
   textFromYaml: string
   smallPictureLink: string
   projectName: string
-  listOfProgramLangs:any[]
+  listOfProgramLangs: object[]
+}
+
+function clickTest(): void{
+  console.log("IT IS CLICKED!")
 }
 
 export default function MediaCard({textFromYaml,smallPictureLink,projectName,listOfProgramLangs} : CardContent) {
   let listWihtIcons: any = {
    Python: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original-wordmark.svg',
   Dart: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dart/dart-original-wordmark.svg',
-  CSS: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg',
+  CSS: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original-wordmark.svg',
   HTML: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original-wordmark.svg',
   JavaScript: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg',
   TypeScript: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg',
   'C#': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg',
   'ASP.NET': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dotnetcore/dotnetcore-original.svg',
-  Kotlin: '',
-  Swift: '',
-  'Objective-C': '',
-  CMake: '',
-  Java: '',
-  Ruby: '',
-  Starlark: ''};
+  Kotlin: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kotlin/kotlin-original-wordmark.svg',
+  Swift: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/swift/swift-original.svg',
+  'Objective-C': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/objectivec/objectivec-plain.svg',
+  CMake: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cmake/cmake-original.svg',
+  Java: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original-wordmark.svg',
+  Ruby: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/ruby/ruby-original.svg',
+  Starlark: '',
+  Cplusplus: 'stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css'};
 
-  //listOfProgramLangs.push({node: {name: 'JavaScript',}});
+  // if(listOfProgramLangs.length < 6){
+  //   listOfProgramLangs.push({node: {name: 'JavaScript',}});
+  // }
 
   let testNamesList: string[] = ['Python', 'JavaScript', 'Dart','C#'];
 
   console.log(smallPictureLink, "Shoule be img link");
+
   return (
     <Card sx={{ maxWidth: 345 }} style={{backgroundColor: 'pink'}}>
       <Container>
         <Grid container>
           {listOfProgramLangs.map((item, index) =>(
-            <Grid key={index} xs={1} md={1} lg={3}>
+            <Grid key={index} xs={1} md={1} lg={2}>
               {/* {item.node.name} */}
-              <img src={listWihtIcons[item.node.name]} width={60} />
+              <img src={listWihtIcons[item.node.name]} width={55} alt={projectName}/>
             </Grid>
           ))}
         </Grid>
@@ -68,9 +76,10 @@ export default function MediaCard({textFromYaml,smallPictureLink,projectName,lis
           {textFromYaml}
         </Typography>
       </CardContent>
-      <CardActions>
-        <Button size="small">Share</Button>
-        <Button size="small">Learn More</Button>
+      <CardActions>        
+        <Button size="small" onClick={() => console.log("BIG PIPI")}>
+        SEE MORE
+      </Button>
       </CardActions>
     </Card>
   );
