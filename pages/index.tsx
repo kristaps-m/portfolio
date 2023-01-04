@@ -207,22 +207,22 @@ const Home: NextPage<Props> = (props) => {
           {props.username}
         </h1>
         <h2 style={{backgroundColor: 'lightblue', color: 'white'}}>Total Contributions: {props.totalContributions}</h2>
-      <div style={{backgroundColor: 'lightgray'}}>
+      {/* <div style={{backgroundColor: 'lightgray'}}>
         <h1>This is random activity</h1>      
         <GitHubAcitvity/>
-      </div>
+      </div> */}
         <br/>
       <div style={{backgroundColor: 'lightgray'}}>
         <h1>This is LEGIT activity</h1>    
         <p style={{color: 'darkblue'}}><a href="https://grubersjoe.github.io/react-github-calendar/?ref=madewithreactjs.com">https://grubersjoe.github.io/react-github-calendar/?ref=madewithreactjs.com</a></p>  
         <GitHubCalendar username="kristaps-m" />
       </div>
-        <br/>
+        {/* <br/>
       <div style={{backgroundColor: 'lightgray'}}>
         <h1>This is LEGIT activity #2</h1>    
         <p style={{color: 'darkblue'}}><a href="https://www.npmjs.com/package/react-github-graph">https://www.npmjs.com/package/react-github-graph</a></p>  
         <GithubContributions username="{kristaps-m}" />
-      </div>
+      </div> */}
 
 
         <p className={styles.description}>
