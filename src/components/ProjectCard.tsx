@@ -16,25 +16,28 @@ interface CardContent{
   textFromYaml: string
   smallPictureLink: string
   projectName: string
+  listOfProgramLangs:any[]
 }
 
-export default function MediaCard({textFromYaml,smallPictureLink,projectName} : CardContent) {
-  let listWihtIcons: any[] = [
-   {Python: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original-wordmark.svg'},
-  {Dart: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dart/dart-original-wordmark.svg'},
-  {CSS: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg'},
-  {HTML: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original-wordmark.svg'},
-  {JavaScript: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg'},
-  {TypeScript: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg'},
-  {'C#': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg'},
-  {'ASP.NET': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dotnetcore/dotnetcore-original.svg'},
-  {Kotlin: ''},
-  {Swift: ''},
-  {'Objective-C': ''},
-  {CMake: ''},
-  {Java: ''},
-  {Ruby: ''},
-  {Starlark: ''},];
+export default function MediaCard({textFromYaml,smallPictureLink,projectName,listOfProgramLangs} : CardContent) {
+  let listWihtIcons: any = {
+   Python: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original-wordmark.svg',
+  Dart: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dart/dart-original-wordmark.svg',
+  CSS: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg',
+  HTML: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original-wordmark.svg',
+  JavaScript: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg',
+  TypeScript: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg',
+  'C#': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg',
+  'ASP.NET': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dotnetcore/dotnetcore-original.svg',
+  Kotlin: '',
+  Swift: '',
+  'Objective-C': '',
+  CMake: '',
+  Java: '',
+  Ruby: '',
+  Starlark: ''};
+
+  //listOfProgramLangs.push({node: {name: 'JavaScript',}});
 
   let testNamesList: string[] = ['Python', 'JavaScript', 'Dart','C#'];
 
@@ -43,9 +46,10 @@ export default function MediaCard({textFromYaml,smallPictureLink,projectName} : 
     <Card sx={{ maxWidth: 345 }} style={{backgroundColor: 'pink'}}>
       <Container>
         <Grid container>
-          {testNamesList.map((item, index) =>(
-            <Grid key={index} xs={6} md={6} lg={4}>
-              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dotnetcore/dotnetcore-original.svg" />
+          {listOfProgramLangs.map((item, index) =>(
+            <Grid key={index} xs={1} md={1} lg={3}>
+              {/* {item.node.name} */}
+              <img src={listWihtIcons[item.node.name]} width={60} />
             </Grid>
           ))}
         </Grid>
@@ -71,9 +75,3 @@ export default function MediaCard({textFromYaml,smallPictureLink,projectName} : 
     </Card>
   );
 }
-
-/*
-
-
-
-*/

@@ -38,6 +38,7 @@ export async function getServerSideProps() {
     projectUrl: data.data.user.repositories.nodes,
     theRepoName: data.data.user.repositories.nodes,
     getTheThingWeNeed: data.data.user.repositories.nodes,
+    listOfProgramLangs: data.data.user.repositories,
     //testData2: data2.data.repository.object.entries
 }, // will be passed to the page component as props
   }
@@ -50,6 +51,7 @@ interface Props {
   projectUrl: any
   theRepoName: any[]
   getTheThingWeNeed: any[]
+  listOfProgramLangs: any[]
   //testData2: any[]
 }
 
@@ -156,15 +158,18 @@ const Home: NextPage<Props> = (props) => {
 
   for (let index = 0; index < props.getTheThingWeNeed.length; index++) {
     if(props.getTheThingWeNeed[index].object.entries.length > 0) {
+      console.log(props.getTheThingWeNeed[index], "\n NODES thig we need");
       let test = props.getTheThingWeNeed[index].object.entries;
       let oneRepoObject = {
         repoName:'',
         ymlText: '',
         smallPicUrl:'',
+        progLangs: [],
       };
       oneRepoObject['repoName'] = props.getTheThingWeNeed[index].name;
       oneRepoObject['smallPicUrl'] = `https://raw.githubusercontent.com/kristaps-m/${oneRepoObject['repoName']}/master/portfolio/image-small.png`
-      
+      oneRepoObject['progLangs'] = props.getTheThingWeNeed[index].languages.edges
+
       for (let j = 0; j < test.length; j++) {
         if(test[j].name === "portfolio.yml"){
           oneRepoObject['ymlText'] = test[j].object.text;          
@@ -175,6 +180,7 @@ const Home: NextPage<Props> = (props) => {
       }
     }
   }
+  
 
   //console.log(theListOfTexts);
   //console.log(theListOfTexts[0],typeof theListOfTexts[0]);
@@ -239,7 +245,10 @@ const Home: NextPage<Props> = (props) => {
         <Grid container>
           {theListOfTexts.map((item: { ymlText: string; smallPicUrl: string; repoName: string}) =>(
             <Grid key={item.ymlText} xs={6} md={6} lg={4}>
-              <ProjectCard textFromYaml={item.ymlText} smallPictureLink={item.smallPicUrl} projectName={item.repoName}></ProjectCard>
+              <ProjectCard textFromYaml={item.ymlText}
+               smallPictureLink={item.smallPicUrl} 
+               projectName={item.repoName}
+               listOfProgramLangs={item.progLangs}></ProjectCard>
             </Grid>
           ))}
         </Grid>
