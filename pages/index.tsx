@@ -240,7 +240,8 @@ const Home: NextPage<Props> = (props) => {
       <Button variant="contained">Contained</Button>
       <Button variant="outlined">Outlined</Button>
         </Stack>
-        {/* ------------------------CARD---------------------  */}   
+        {/* ------------------------CARD---------------------  */}  
+      <br></br>
       <Container>
         <Grid container>
           {theListOfTexts.map((item: {

@@ -5,8 +5,10 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { Avatar, CardHeader, Container, Grid, IconButton } from '@mui/material';
+import { Avatar, CardHeader, Container, Grid, IconButton, Link} from '@mui/material';
 import DevicesIcon from '@mui/icons-material/Devices';
+import SeeMorePage from './SeeMorePage';
+import { BrowserRouter, Route } from 'react-router-dom';
 // import IconPython from 'react-devicon/python/plain';
 //import IconAmazonwebservices from 'react-devicon/amazonwebservices/plain-wordmark';
 
@@ -48,6 +50,20 @@ export default function MediaCard({textFromYaml,smallPictureLink,projectName,lis
 
   let testNamesList: string[] = ['Python', 'JavaScript', 'Dart','C#'];
 
+  function goGo() {
+      const openInNewTab = (url: string | URL | undefined) => {
+        window.open(url, '_blank', 'noopener,noreferrer');
+      };
+
+      return (
+        <div>
+          <button onClick={() => openInNewTab('https://google.com')}>
+            Open google
+          </button>
+        </div>
+      );
+    };
+
   console.log(smallPictureLink, "Shoule be img link");
 
   return (
@@ -77,9 +93,15 @@ export default function MediaCard({textFromYaml,smallPictureLink,projectName,lis
         </Typography>
       </CardContent>
       <CardActions>        
-        <Button size="small" onClick={() => console.log("BIG PIPI")}>
-        SEE MORE
-      </Button>
+        <Link href="https://github.com/kristaps-m" target="_blank">
+            Go GitHub
+        </Link>
+        {/* <Link href='/:1' target="_blank" component={SeeMorePage}/> */}
+        <Button style={{backgroundColor: 'white'}} size="small" onClick={() => goGo()}>
+          SEE MORE
+            {/* <Route path='/' component={SeeMorePage}/>           */}
+          
+        </Button>
       </CardActions>
     </Card>
   );

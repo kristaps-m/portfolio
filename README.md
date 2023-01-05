@@ -45,6 +45,7 @@ npm install moment
 npm install react-github-graph
 npm i styled-components
 npm install --save-dev @types/styled-components
+npm install react-router-dom@5.3.0 @types/react-router-dom@5.3.2
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
