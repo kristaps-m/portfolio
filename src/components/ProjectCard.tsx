@@ -9,6 +9,7 @@ import { Avatar, CardHeader, Container, Grid, IconButton, Link} from '@mui/mater
 import DevicesIcon from '@mui/icons-material/Devices';
 import SeeMorePage from './SeeMorePage';
 import { BrowserRouter, Route } from 'react-router-dom';
+import projectId from '../../pages/[projectId]';
 // import IconPython from 'react-devicon/python/plain';
 //import IconAmazonwebservices from 'react-devicon/amazonwebservices/plain-wordmark';
 
@@ -21,9 +22,9 @@ interface CardContent{
   listOfProgramLangs: object[]
 }
 
-function clickTest(): void{
-  console.log("IT IS CLICKED!")
-}
+// function clickTest(): void{
+//   console.log("IT IS CLICKED!")
+// }
 
 export default function MediaCard({textFromYaml,smallPictureLink,projectName,listOfProgramLangs} : CardContent) {
   let listWihtIcons: any = {
@@ -48,23 +49,23 @@ export default function MediaCard({textFromYaml,smallPictureLink,projectName,lis
   //   listOfProgramLangs.push({node: {name: 'JavaScript',}});
   // }
 
-  let testNamesList: string[] = ['Python', 'JavaScript', 'Dart','C#'];
+  // let testNamesList: string[] = ['Python', 'JavaScript', 'Dart','C#'];
 
-  function goGo() {
-      const openInNewTab = (url: string | URL | undefined) => {
-        window.open(url, '_blank', 'noopener,noreferrer');
-      };
+  // function goGo() {
+  //     const openInNewTab = (url: string | URL | undefined) => {
+  //       window.open(url, '_blank', 'noopener,noreferrer');
+  //     };
 
-      return (
-        <div>
-          <button onClick={() => openInNewTab('https://google.com')}>
-            Open google
-          </button>
-        </div>
-      );
-    };
+  //     return (
+  //       <div>
+  //         <button onClick={() => openInNewTab('https://google.com')}>
+  //           Open google
+  //         </button>
+  //       </div>
+  //     );
+  //   };
 
-  console.log(smallPictureLink, "Shoule be img link");
+  // console.log(smallPictureLink, "Shoule be img link");
 
   return (
     <Card sx={{ maxWidth: 345 }} style={{backgroundColor: 'pink'}}>
@@ -96,12 +97,15 @@ export default function MediaCard({textFromYaml,smallPictureLink,projectName,lis
         <Link href="https://github.com/kristaps-m" target="_blank">
             Go GitHub
         </Link>
+        <Link href={`http://localhost:3000/${projectName}`} target="_blank">
+            SEE MORE
+        </Link>
         {/* <Link href='/:1' target="_blank" component={SeeMorePage}/> */}
-        <Button style={{backgroundColor: 'white'}} size="small" onClick={() => goGo()}>
+        {/* <Button style={{backgroundColor: 'white'}} size="small" onClick={() => console.log("SEE MORE!")}>
           SEE MORE
-            {/* <Route path='/' component={SeeMorePage}/>           */}
-          
-        </Button>
+            <Link href='/' component={projectId}/>          
+          <projectId context={projectName}/>
+        </Button> */}
       </CardActions>
     </Card>
   );

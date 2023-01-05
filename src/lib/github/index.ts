@@ -30,11 +30,21 @@ export const getContributions = async (username: string) => {
                     name
                     url
                     visibility
-										object(expression: "HEAD:") {
+                      object(expression: "HEAD:") {
 										        ... on Tree {
                       entries {
                         name
                         object {
+                          ... on Tree{
+                            entries{
+                              name
+                       				object{
+                                ... on Blob{
+                                  text
+                                }
+                              }
+                            }
+                          }
                           ... on Blob {
                             text
                           }
@@ -51,8 +61,7 @@ export const getContributions = async (username: string) => {
                       }
                     }
                   }
-                }
-    						
+                }    						
               }
             }`,
   };

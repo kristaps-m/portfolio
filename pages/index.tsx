@@ -18,6 +18,7 @@ import * as cheerio from 'cheerio';
 import { forEachChild } from 'typescript';
 import { type } from 'os';
 import { Container, Grid } from '@mui/material';
+// import projectId from './[projectId]'
 
 export async function getServerSideProps() {
   let data = await getContributions('kristaps-m');
@@ -158,7 +159,7 @@ const Home: NextPage<Props> = (props) => {
 
   for (let index = 0; index < props.getTheThingWeNeed.length; index++) {
     if(props.getTheThingWeNeed[index].object.entries.length > 0) {
-      console.log(props.getTheThingWeNeed[index], "\n NODES thig we need");
+      //console.log(props.getTheThingWeNeed[index], "\n NODES thig we need");
       let test = props.getTheThingWeNeed[index].object.entries;
       let oneRepoObject = {
         repoName:'',
@@ -174,7 +175,7 @@ const Home: NextPage<Props> = (props) => {
         if(test[j].name === "portfolio.yml"){
           oneRepoObject['ymlText'] = test[j].object.text;          
           
-          console.log(oneRepoObject)
+          //console.log(oneRepoObject)
           theListOfTexts.push(oneRepoObject); // test[j].object.text
         }
       }
