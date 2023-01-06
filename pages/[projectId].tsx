@@ -11,11 +11,11 @@ export async function getServerSideProps(context: { params: { projectId: string;
   const projectId = context?.params?.projectId
   // const data = await getContributions2('kristaps-m', `${projectId}`);
   const data = await getContributions('kristaps-m');
-  console.log("BEFORE ----------------------------------");
-  //console.log(context)
-  console.log(projectId,"---THIS IS PROJECT ID");
-  console.log("DATA---",data, "---DATA");
-  console.log("BEFORE ----------------------------------");
+  // console.log("BEFORE ----------------------------------");
+  // //console.log(context)
+  // console.log(projectId,"---THIS IS PROJECT ID");
+  // console.log("DATA---",data, "---DATA");
+  // console.log("BEFORE ----------------------------------");
 
   if(!projectId){
     return {redirect:{destination: '/'}}
@@ -51,6 +51,7 @@ const Home: NextPage<Props> = (props) => {
       let test = props.getTheThingWeNeed[index].object.entries;
       let oneRepoObject = {
         repoName:'',
+        repoGitUrl: '',
         ymlText: '',
         bigPicUrl:'',
         portfReadMeUrl:'',
@@ -58,6 +59,7 @@ const Home: NextPage<Props> = (props) => {
         progLangs: [],
       };
       oneRepoObject['repoName'] = props.getTheThingWeNeed[index].name;
+      oneRepoObject['repoGitUrl'] = props.getTheThingWeNeed[index].url;
       oneRepoObject['bigPicUrl'] = `https://raw.githubusercontent.com/kristaps-m/${oneRepoObject['repoName']}/master/portfolio/cover-image.png`
       oneRepoObject['portfReadMeUrl'] = `https://raw.githubusercontent.com/kristaps-m/${oneRepoObject['repoName']}/master/portfolio/README.md`
       oneRepoObject['progLangs'] = props.getTheThingWeNeed[index].languages.edges
@@ -91,6 +93,7 @@ const Home: NextPage<Props> = (props) => {
         <img src={props.avatarUrl} alt="Girl in a jacket" width="200"></img>
       </div>
       <div>TOTAL CONTRIBUTIONS = {props.totalContributions}</div>
+      <p>THIS IS LINK TO GIT HUB ....<a href={theListOfTexts[0].repoGitUrl}>{theListOfTexts[0].repoName}</a></p>
       <div>
         <img src={theListOfTexts[0].bigPicUrl} alt={props.projectId}></img>
         <p>{theListOfTexts[0].bigPicUrl}</p>
