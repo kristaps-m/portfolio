@@ -9,8 +9,9 @@ import { getContributions } from "../src/lib/github/index";
 //import {getContributions2} from '../src/lib/github/index2';
 import { NextPage } from "next";
 import GitHubCalendar from "react-github-calendar";
-import { Box, Container, Grid, Paper, styled} from "@mui/material";
+import { Box, Container, Grid, Paper, styled } from "@mui/material";
 import SeeMorePage from "../src/components/SeeMorePage";
+import * as allInterfaces from "../src/interfaces";
 // import projectId from './[projectId]'
 
 export async function getServerSideProps() {
@@ -36,15 +37,7 @@ export async function getServerSideProps() {
   };
 }
 
-interface Props {
-  username: string;
-  totalContributions: number;
-  avatarUrl: string;
-  theRepoName: any[];
-  getTheThingWeNeed: any[];
-  listOfProgramLangs: any[];
-  //testData2: any[]
-}
+
 
 let theUrl =
   "https://raw.githubusercontent.com/kristaps-m/ycombinator-data-scraper/master/portfolio.yml";
@@ -66,8 +59,7 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-const Home: NextPage<Props> = (props) => {
-
+const Home: NextPage<allInterfaces.IndexDataProps> = (props) => {
   // The ultimate filter:
   let theListOfTexts: any = [];
 
@@ -104,11 +96,11 @@ const Home: NextPage<Props> = (props) => {
   const smallP_L =
     "https://raw.githubusercontent.com/kristaps-m/ycombinator-data-scraper/master/portfolio/image-small.png";
 
-  const listLen = theListOfTexts.length - 2;
-
-  for (let index = 0; index < listLen; index++) {
-    theListOfTexts.push(theListOfTexts[index]);
-  }
+  /** INCRASE SIZE OF DATA FROM API */
+  // const listLen = theListOfTexts.length - 2;
+  // for (let index = 0; index < listLen; index++) {
+  //   theListOfTexts.push(theListOfTexts[index]);
+  // }
 
   return (
     <div className={styles.container}>
@@ -119,45 +111,42 @@ const Home: NextPage<Props> = (props) => {
       </Head>
 
       <main className={styles.main}>
-        <Box sx={{ width: "100%" }}>
-          <Grid
-            container
-            rowSpacing={1}
-            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-          >
-            <Grid item xs={4}>
-              <Item className={styles.title}>{props.username} </Item>
-            </Grid>
-            <Grid item xs={6}>
-              <Item className={styles.description}>
-                Total Contributions: {props.totalContributions}
-              </Item>
-            </Grid>
-            <Grid item xs={4}>
-              <Item>
-                <img src={props.avatarUrl} alt="Avatar Image :)" width={200} />
-              </Item>
-            </Grid>
-            <Grid item xs={6}>
-              <Item>
-                <div style={{ backgroundColor: "lightgray" }}>
-                  <p style={{ color: "darkblue" }}></p>
-                  <GitHubCalendar username="kristaps-m" />
-                </div>
-              </Item>
-            </Grid>
-          </Grid>
-        </Box>
-
-        {/* <br/>
-      <div style={{backgroundColor: 'lightgray'}}>
-        <h1>This is LEGIT activity #2</h1>    
-        <p style={{color: 'darkblue'}}><a href="https://www.npmjs.com/package/react-github-graph">https://www.npmjs.com/package/react-github-graph</a></p>  
-        <GithubContributions username="{kristaps-m}" />
-      </div> */}
-        {/* ------------------------CARD---------------------  */}
-        <br></br>
         <Container>
+          <Box sx={{ width: "100%" }}>
+            <Grid
+              container
+              rowSpacing={1}
+              columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+            >
+              <Grid item xs={4}>
+                <Item className={styles.title}>{props.username} </Item>
+              </Grid>
+              <Grid item xs={6}>
+                <Item className={styles.description}>
+                  Total Contributions: {props.totalContributions}
+                </Item>
+              </Grid>
+              <Grid item xs={4}>
+                <Item>
+                  <img
+                    src={props.avatarUrl}
+                    alt="Avatar Image :)"
+                    width={200}
+                  />
+                </Item>
+              </Grid>
+              <Grid item xs={6}>
+                <Item>
+                  <div style={{ backgroundColor: "lightgray" }}>
+                    <p style={{ color: "darkblue" }}></p>
+                    <GitHubCalendar username="kristaps-m" />
+                  </div>
+                </Item>
+              </Grid>
+            </Grid>
+          </Box>
+          <br></br>
+          {/* ------------------------CARD---------------------  */}
           <Grid container>
             {theListOfTexts.map(
               (item: {
@@ -173,12 +162,13 @@ const Home: NextPage<Props> = (props) => {
                     projectName={item.repoName}
                     listOfProgramLangs={item.progLangs}
                   ></ProjectCard>
+                  <br></br>
                 </Grid>
               )
             )}
             <SeeMorePage></SeeMorePage>
           </Grid>
-        </Container>        
+        </Container>
       </main>
 
       <footer className={styles.footer}>

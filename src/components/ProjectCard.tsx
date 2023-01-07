@@ -1,19 +1,13 @@
 import * as React from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
+import ProjectCardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { Container, Grid, Link } from "@mui/material";
+import * as allInterfaces from "../interfaces";
 // import IconPython from 'react-devicon/python/plain';
 //import IconAmazonwebservices from 'react-devicon/amazonwebservices/plain-wordmark';
-
-interface CardContent {
-  textFromYaml: string;
-  smallPictureLink: string;
-  projectName: string;
-  listOfProgramLangs: object[];
-}
 
 const listWihtIcons: any = {
   Python:
@@ -51,13 +45,25 @@ export default function MediaCard({
   smallPictureLink,
   projectName,
   listOfProgramLangs,
-}: CardContent) {
+}: allInterfaces.ProjectCardContent) {
+  
   return (
     <Card sx={{ maxWidth: 345 }} style={{ backgroundColor: "pink" }}>
       <Container>
         <Grid container>
           {listOfProgramLangs.map((item, index) => (
-            <Grid key={index} xs={1} md={1} lg={2}>
+            <Grid
+              key={index}
+              xs={1}
+              md={1}
+              lg={2}
+              sx={{
+                "&:hover": {
+                  backgroundColor: "primary.main",
+                  opacity: 0.9,
+                },
+              }}
+            >
               <img
                 src={listWihtIcons[item.node.name]}
                 width={55}
@@ -73,23 +79,19 @@ export default function MediaCard({
         image={smallPictureLink}
         alt={projectName}
       />
-      <CardContent>
+      <ProjectCardContent>
         <Typography gutterBottom variant="h5" component="div">
           {projectName}
         </Typography>
         <Typography variant="body2" color="text.secondary">
           {textFromYaml}
         </Typography>
-      </CardContent>
+      </ProjectCardContent>
       <CardActions>
-        <Link
-          href={`https://github.com/kristaps-m/${projectName}`}
-        >
+        <Link href={`https://github.com/kristaps-m/${projectName}`}>
           Go GitHub
         </Link>
-        <Link href={`http://localhost:3000/${projectName}`}>
-          SEE MORE
-        </Link>
+        <Link href={`http://localhost:3000/${projectName}`}>SEE MORE</Link>
         {/* <Link href='/:1' target="_blank" component={SeeMorePage}/> */}
         {/* <Button style={{backgroundColor: 'white'}} size="small" onClick={() => console.log("SEE MORE!")}>
           SEE MORE
