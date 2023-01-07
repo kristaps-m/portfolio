@@ -1,40 +1,58 @@
-import styles from '../styles/Home.module.css'
-import * as React from 'react';
+import styles from "../styles/Home.module.css";
+import * as React from "react";
 import { GetServerSideProps, NextPage, NextPageContext } from "next";
-import { getContributions2 } from '../src/lib/github/index2';
-import { getContributions } from '../src/lib/github';
-import { AppBar, Box, Button, Card, CardActions, CardContent, CardMedia, Container, CssBaseline, Grid, Stack, Toolbar, Typography } from '@mui/material';
+import { getContributions2 } from "../src/lib/github/index2";
+import { getContributions } from "../src/lib/github";
+import {
+  AppBar,
+  Box,
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Container,
+  CssBaseline,
+  Grid,
+  Stack,
+  Toolbar,
+  Typography,
+} from "@mui/material";
 import Link from "@mui/material/Link";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import InfoIcon from "@mui/icons-material/Info";
-import * as allInterfaces from '../src/interfaces';
+import * as allInterfaces from "../src/interfaces";
+import { red } from "@mui/material/colors";
 //import styled from "styled-components";
 // export const getServerSideProps: GetServerSideProps<Props> = async (context) => {
 
-export async function getServerSideProps(context: { params: { projectId: string; }; }) {
-
-  const projectId = context?.params?.projectId
+export async function getServerSideProps(context: {
+  params: { projectId: string };
+}) {
+  const projectId = context?.params?.projectId;
   // const data = await getContributions2('kristaps-m', `${projectId}`);
-  const data = await getContributions('kristaps-m');
+  const data = await getContributions("kristaps-m");
   // console.log("BEFORE ----------------------------------");
   // //console.log(context)
   // console.log(projectId,"---THIS IS PROJECT ID");
   // console.log("DATA---",data, "---DATA");
   // console.log("BEFORE ----------------------------------");
 
-  if(!projectId){
-    return {redirect:{destination: '/'}}
+  if (!projectId) {
+    return { redirect: { destination: "/" } };
   }
 
   return {
     props: {
       projectId: projectId as string,
       username: data.data.user.name,
-      totalContributions: data.data.user.contributionsCollection.contributionCalendar.totalContributions,
+      totalContributions:
+        data.data.user.contributionsCollection.contributionCalendar
+          .totalContributions,
       avatarUrl: data.data.user.avatarUrl,
       getTheThingWeNeed: data.data.user.repositories.nodes,
     },
-  }
+  };
 }
 
 function Copyright({ url }: allInterfaces.Url) {
@@ -42,7 +60,7 @@ function Copyright({ url }: allInterfaces.Url) {
     <Typography variant="body2" color="text.secondary" align="center">
       {"Copyright © "}
       <Link color="inherit" href={url}>
-        Your Website
+        my GitHub repository
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -52,44 +70,59 @@ function Copyright({ url }: allInterfaces.Url) {
 
 const cards = [1];
 
-const theme = createTheme();
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#6D9F71",
+    },
+    text: {
+      primary: "#952C85",
+      secondary: "#2E2D4D",
+    },
+  },
+});
 
 const Home: NextPage<allInterfaces.projectIdProps> = (props) => {
-
   let dataFromGitHub: allInterfaces.projectIdFilteredData[] = [];
 
-  //console.log(props.getTheThingWeNeed);
+  //console.log(props.getTheThingWeNeed); #2E2D4D
   // https://raw.githubusercontent.com/kristaps-m/ycombinator-data-scraper/master/portfolio/README.md
-  
+
   for (let index = 0; index < props.getTheThingWeNeed.length; index++) {
-    if(props.getTheThingWeNeed[index].object.entries.length > 0) {
+    if (props.getTheThingWeNeed[index].object.entries.length > 0) {
       //console.log(props.getTheThingWeNeed[index], "\n NODES thig we need");
       let test = props.getTheThingWeNeed[index].object.entries;
       let oneRepoObject = {
-        repoName:'',
-        repoGitUrl: '',
-        ymlText: '',
-        bigPicUrl:'',
-        portfReadMeUrl:'',
-        portfR_M_Text:'',
+        repoName: "",
+        repoGitUrl: "",
+        ymlText: "",
+        bigPicUrl: "",
+        portfReadMeUrl: "",
+        portfR_M_Text: "",
       };
-      oneRepoObject['repoName'] = props.getTheThingWeNeed[index].name;
-      oneRepoObject['repoGitUrl'] = props.getTheThingWeNeed[index].url;
-      oneRepoObject['bigPicUrl'] = `https://raw.githubusercontent.com/kristaps-m/${oneRepoObject['repoName']}/master/portfolio/cover-image.png`
-      oneRepoObject['portfReadMeUrl'] = `https://raw.githubusercontent.com/kristaps-m/${oneRepoObject['repoName']}/master/portfolio/README.md`
+      oneRepoObject["repoName"] = props.getTheThingWeNeed[index].name;
+      oneRepoObject["repoGitUrl"] = props.getTheThingWeNeed[index].url;
+      oneRepoObject[
+        "bigPicUrl"
+      ] = `https://raw.githubusercontent.com/kristaps-m/${oneRepoObject["repoName"]}/master/portfolio/cover-image.png`;
+      oneRepoObject[
+        "portfReadMeUrl"
+      ] = `https://raw.githubusercontent.com/kristaps-m/${oneRepoObject["repoName"]}/master/portfolio/README.md`;
 
       for (let j = 0; j < test.length; j++) {
-        if(test[j].name === "portfolio.yml" && oneRepoObject['repoName'] === props.projectId){
-          oneRepoObject['ymlText'] = test[j].object.text;          
+        if (
+          test[j].name === "portfolio.yml" &&
+          oneRepoObject["repoName"] === props.projectId
+        ) {
+          oneRepoObject["ymlText"] = test[j].object.text;
           console.log(props.getTheThingWeNeed[index]);
           //console.log(oneRepoObject)
           dataFromGitHub.push(oneRepoObject); // test[j].object.text
-        }
-        else if(test[j].name === "portfolio"){
+        } else if (test[j].name === "portfolio") {
           let superDeep = test[j].object.entries;
           for (let omg = 0; omg < superDeep.length; omg++) {
-            if(superDeep[omg].name === "README.md"){
-              oneRepoObject['portfR_M_Text'] =superDeep[omg].object.text;
+            if (superDeep[omg].name === "README.md") {
+              oneRepoObject["portfR_M_Text"] = superDeep[omg].object.text;
             }
           }
         }
@@ -165,7 +198,7 @@ const Home: NextPage<allInterfaces.projectIdProps> = (props) => {
           <Box
             sx={{
               width: 600,
-              backgroundColor: "primary.dark",
+              backgroundColor: "primary.light",
               "&:hover": {
                 backgroundColor: "primary.main",
                 opacity: 0.9,
@@ -256,11 +289,11 @@ const Home: NextPage<allInterfaces.projectIdProps> = (props) => {
         >
           {props.username}
         </Typography>
-        <Copyright url={dataFromGitHub[0].repoGitUrl}/>
+        <Copyright url={dataFromGitHub[0].repoGitUrl} />
       </Box>
       {/* End footer */}
     </ThemeProvider>
   );
-}
+};
 
 export default Home;

@@ -10,7 +10,7 @@ import { getContributions } from "../src/lib/github/index";
 import { NextPage } from "next";
 import GitHubCalendar from "react-github-calendar";
 import { Box, Container, Grid, Paper, styled } from "@mui/material";
-import SeeMorePage from "../src/components/SeeMorePage";
+import HireMeCard from "../src/components/HireMeCard";
 import * as allInterfaces from "../src/interfaces";
 // import projectId from './[projectId]'
 
@@ -52,7 +52,7 @@ const testAddEmptyProject = {
 };
 
 const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
+  backgroundColor: theme.palette.mode === "dark" ? "#fff" : "#9CAFB7",
   ...theme.typography.body2,
   padding: theme.spacing(1),
   textAlign: "center",
@@ -137,7 +137,7 @@ const Home: NextPage<allInterfaces.IndexDataProps> = (props) => {
               </Grid>
               <Grid item xs={6}>
                 <Item>
-                  <div style={{ backgroundColor: "lightgray" }}>
+                  <div style={{ backgroundColor: "#ADB993" }}>
                     <p style={{ color: "darkblue" }}></p>
                     <GitHubCalendar username="kristaps-m" />
                   </div>
@@ -166,7 +166,7 @@ const Home: NextPage<allInterfaces.IndexDataProps> = (props) => {
                 </Grid>
               )
             )}
-            <SeeMorePage></SeeMorePage>
+            <HireMeCard></HireMeCard>
           </Grid>
         </Container>
       </main>

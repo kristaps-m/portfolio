@@ -46,9 +46,9 @@ export default function MediaCard({
   projectName,
   listOfProgramLangs,
 }: allInterfaces.ProjectCardContent) {
-  
+
   return (
-    <Card sx={{ maxWidth: 345 }} style={{ backgroundColor: "pink" }}>
+    <Card sx={{ maxWidth: 345 }} style={{ backgroundColor: "#D0D38F" }}>
       <Container>
         <Grid container>
           {listOfProgramLangs.map((item, index) => (
