@@ -1,8 +1,8 @@
-const key: string = "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";
+const { REACT_APP_GITHUB_TOKEN } = process.env;
 
 export const getContributions = async (username: string) => {
   const headers = {
-    Authorization: `bearer ${key}`,
+    Authorization: `bearer ${REACT_APP_GITHUB_TOKEN}`,
   };
   const body = {
     query: `query {

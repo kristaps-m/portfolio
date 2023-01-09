@@ -6,6 +6,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { Container, Grid, Link } from "@mui/material";
 import * as allInterfaces from "../interfaces";
+import { maxHeight } from "@mui/system";
 // import IconPython from 'react-devicon/python/plain';
 //import IconAmazonwebservices from 'react-devicon/amazonwebservices/plain-wordmark';
 
@@ -47,10 +48,20 @@ export default function MediaCard({
   listOfProgramLangs,
 }: allInterfaces.ProjectCardContent) {
 
+  /* Add more languages for testing */
+  // let theLen = listOfProgramLangs.length;
+  // for (let index = 0; index < theLen; index++) {
+  //   const element = listOfProgramLangs[index];
+  //   listOfProgramLangs.push(element);
+  // }
+
   return (
-    <Card sx={{ maxWidth: 345 }} style={{ backgroundColor: "#D0D38F" }}>
+    <Card
+      sx={{ maxWidth: 345 }}
+      style={{ backgroundColor: "#D0D38F", height: "100%" }}
+    >
       <Container>
-        <Grid container>
+        <Grid container style={{ height: "100%" }}>
           {listOfProgramLangs.map((item, index) => (
             <Grid
               key={index}
@@ -75,7 +86,7 @@ export default function MediaCard({
       </Container>
       <CardMedia
         component="img"
-        height="250"
+        width="250"
         image={smallPictureLink}
         alt={projectName}
       />
@@ -92,12 +103,6 @@ export default function MediaCard({
           Go GitHub
         </Link>
         <Link href={`http://localhost:3000/${projectName}`}>SEE MORE</Link>
-        {/* <Link href='/:1' target="_blank" component={SeeMorePage}/> */}
-        {/* <Button style={{backgroundColor: 'white'}} size="small" onClick={() => console.log("SEE MORE!")}>
-          SEE MORE
-            <Link href='/' component={projectId}/>          
-          <projectId context={projectName}/>
-        </Button> */}
       </CardActions>
     </Card>
   );

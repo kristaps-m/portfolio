@@ -29,27 +29,12 @@ export async function getServerSideProps() {
         data.data.user.contributionsCollection.contributionCalendar
           .totalContributions,
       avatarUrl: data.data.user.avatarUrl,
-      theRepoName: data.data.user.repositories.nodes,
       getTheThingWeNeed: data.data.user.repositories.nodes,
       listOfProgramLangs: data.data.user.repositories,
       //testData2: data2.data.repository.object.entries
     }, // will be passed to the page component as props
   };
 }
-
-
-
-let theUrl =
-  "https://raw.githubusercontent.com/kristaps-m/ycombinator-data-scraper/master/portfolio.yml";
-let theUrl2 =
-  "https://raw.githubusercontent.com/kristaps-m/Python/master/portfolio.yml";
-
-const testAddEmptyProject = {
-  ymlText: "EMPTY",
-  smallPicUrl: "https://picsum.photos/200/200",
-  projectName: "EMPTY",
-  progLangs: [{ node: { name: "Python" } }],
-};
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#fff" : "#9CAFB7",
@@ -60,8 +45,10 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const Home: NextPage<allInterfaces.IndexDataProps> = (props) => {
+  console.log(props.getTheThingWeNeed);
+
   // The ultimate filter:
-  let theListOfTexts: any = [];
+  let listOfStringsForProjectCard: any = [];
 
   for (let index = 0; index < props.getTheThingWeNeed.length; index++) {
     if (props.getTheThingWeNeed[index].object.entries.length > 0) {
@@ -85,7 +72,7 @@ const Home: NextPage<allInterfaces.IndexDataProps> = (props) => {
           oneRepoObject["ymlText"] = test[j].object.text;
 
           //console.log(oneRepoObject)
-          theListOfTexts.push(oneRepoObject); // test[j].object.text
+          listOfStringsForProjectCard.push(oneRepoObject); // test[j].object.text
         }
       }
     }
@@ -148,13 +135,8 @@ const Home: NextPage<allInterfaces.IndexDataProps> = (props) => {
           <br></br>
           {/* ------------------------CARD---------------------  */}
           <Grid container>
-            {theListOfTexts.map(
-              (item: {
-                progLangs: object[];
-                ymlText: string;
-                smallPicUrl: string;
-                repoName: string;
-              }) => (
+            {listOfStringsForProjectCard.map(
+              (item: allInterfaces.projectCardItem) => (
                 <Grid key={item.ymlText} xs={6} md={6} lg={4}>
                   <ProjectCard
                     textFromYaml={item.ymlText}

@@ -30,7 +30,38 @@ export interface IndexDataProps {
   username: string;
   totalContributions: number;
   avatarUrl: string;
-  theRepoName: any[];
-  getTheThingWeNeed: any[];
-  listOfProgramLangs: any[];
+  getTheThingWeNeed: getTheThingWeNeedInterface[];
+  listOfProgramLangs: object[];
+}
+
+interface getTheThingWeNeedInterface {
+  languages: { edges: theEdges[]; name: string };
+  name: string;
+  object: {
+    entries: entriesInterface[];
+  };
+  url: string;
+  visibility: string;
+}
+
+interface theEdges{
+  node: {
+    name: string;
+  }
+}
+
+interface entriesInterface {
+  object: {
+    name: string;
+    object: {
+      name: string;
+    };
+  };
+}
+
+export interface projectCardItem {
+  progLangs: object[];
+  ymlText: string;
+  smallPicUrl: string;
+  repoName: string;
 }
