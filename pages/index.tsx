@@ -12,6 +12,7 @@ import GitHubCalendar from "react-github-calendar";
 import { Box, Container, Grid, Paper, styled } from "@mui/material";
 import HireMeCard from "../src/components/HireMeCard";
 import * as allInterfaces from "../src/interfaces";
+import useMediaQuery from '@mui/material/useMediaQuery';
 // import projectId from './[projectId]'
 
 export async function getServerSideProps() {
@@ -48,13 +49,14 @@ const Home: NextPage<allInterfaces.IndexDataProps> = (props) => {
   console.log(props.getTheThingWeNeed);
 
   // The ultimate filter:
-  let listOfStringsForProjectCard: any = [];
+  let listOfStringsForProjectCard = [];
 
   for (let index = 0; index < props.getTheThingWeNeed.length; index++) {
     if (props.getTheThingWeNeed[index].object.entries.length > 0) {
       //console.log(props.getTheThingWeNeed[index], "\n NODES thig we need");
-      let test = props.getTheThingWeNeed[index].object.entries;
-      let oneRepoObject = {
+      let objectEntries: allInterfaces.entriesInterface[] =
+        props.getTheThingWeNeed[index].object.entries;
+      let oneRepoObject: allInterfaces.oneRepoObjectInterface = {
         repoName: "",
         ymlText: "",
         smallPicUrl: "",
@@ -67,9 +69,9 @@ const Home: NextPage<allInterfaces.IndexDataProps> = (props) => {
       oneRepoObject["progLangs"] =
         props.getTheThingWeNeed[index].languages.edges;
 
-      for (let j = 0; j < test.length; j++) {
-        if (test[j].name === "portfolio.yml") {
-          oneRepoObject["ymlText"] = test[j].object.text;
+      for (let j = 0; j < objectEntries.length; j++) {
+        if (objectEntries[j].name === "portfolio.yml") {
+          oneRepoObject["ymlText"] = objectEntries[j].object.text;
 
           //console.log(oneRepoObject)
           listOfStringsForProjectCard.push(oneRepoObject); // test[j].object.text
@@ -89,6 +91,65 @@ const Home: NextPage<allInterfaces.IndexDataProps> = (props) => {
   //   theListOfTexts.push(theListOfTexts[index]);
   // }
 
+  // let test = <>Small Screen!!!!</>;
+  let test = (
+    <Stack
+      direction={{ xs: "column", sm: "row" }}
+      spacing={{ xs: 1, sm: 2, md: 4 }}
+    >
+      <Item>Item 1</Item>
+      <Item>Item 2</Item>
+      <Item>Item 3</Item>
+    </Stack>
+  );
+  //const matches = useMediaQuery("(min-width: 600px)");
+  const matches = useMediaQuery("(min-width:600px)");
+
+  const a = (
+    <>
+      <Grid item xs={4}>
+        <Item className={styles.title}>{props.username} </Item>
+      </Grid>
+      <Grid item xs={6}>
+        <Item className={styles.description}>
+          Total Contributions: {props.totalContributions}
+        </Item>
+      </Grid>
+      <Grid item xs={4}>
+        <Item>
+          <img src={props.avatarUrl} alt="Avatar Image :)" width={200} />
+        </Item>
+      </Grid>
+      <Grid item xs={6}>
+        <Item>
+          <div style={{ backgroundColor: "#ADB993" }}>
+            <p style={{ color: "darkblue" }}></p>
+            <GitHubCalendar username="kristaps-m" />
+          </div>
+        </Item>
+      </Grid>
+    </>
+  );
+
+  const b = (
+    <>
+      {listOfStringsForProjectCard.map(
+        (item: allInterfaces.projectCardItem) => (
+          <Grid key={item.ymlText} xs={6} md={6} lg={4}>
+            <ProjectCard
+              textFromYaml={item.ymlText}
+              smallPictureLink={item.smallPicUrl}
+              projectName={item.repoName}
+              listOfProgramLangs={item.progLangs}
+            ></ProjectCard>
+            <br></br>
+          </Grid>
+        )
+      )}
+      <HireMeCard></HireMeCard>
+    </>
+  );
+
   return (
     <div className={styles.container}>
       <Head>
@@ -100,56 +161,35 @@ const Home: NextPage<allInterfaces.IndexDataProps> = (props) => {
       <main className={styles.main}>
         <Container>
           <Box sx={{ width: "100%" }}>
-            <Grid
-              container
-              rowSpacing={1}
-              columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-            >
-              <Grid item xs={4}>
-                <Item className={styles.title}>{props.username} </Item>
+            {matches ? (
+              <Grid
+                container
+                rowSpacing={1}
+                columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+              >
+                {a}
               </Grid>
-              <Grid item xs={6}>
-                <Item className={styles.description}>
-                  Total Contributions: {props.totalContributions}
-                </Item>
-              </Grid>
-              <Grid item xs={4}>
-                <Item>
-                  <img
-                    src={props.avatarUrl}
-                    alt="Avatar Image :)"
-                    width={200}
-                  />
-                </Item>
-              </Grid>
-              <Grid item xs={6}>
-                <Item>
-                  <div style={{ backgroundColor: "#ADB993" }}>
-                    <p style={{ color: "darkblue" }}></p>
-                    <GitHubCalendar username="kristaps-m" />
-                  </div>
-                </Item>
-              </Grid>
-            </Grid>
+            ) : (
+              <Stack
+                direction={{ xs: "column", sm: "row" }}
+                spacing={{ xs: 1, sm: 2, md: 4 }}
+              >
+                {a}
+              </Stack>
+            )}
           </Box>
           <br></br>
           {/* ------------------------CARD---------------------  */}
-          <Grid container>
-            {listOfStringsForProjectCard.map(
-              (item: allInterfaces.projectCardItem) => (
-                <Grid key={item.ymlText} xs={6} md={6} lg={4}>
-                  <ProjectCard
-                    textFromYaml={item.ymlText}
-                    smallPictureLink={item.smallPicUrl}
-                    projectName={item.repoName}
-                    listOfProgramLangs={item.progLangs}
-                  ></ProjectCard>
-                  <br></br>
-                </Grid>
-              )
-            )}
-            <HireMeCard></HireMeCard>
-          </Grid>
+          {matches ? (
+            <Grid container>{b}</Grid>
+          ) : (
+            <Stack
+              direction={{ xs: "column", sm: "row" }}
+              spacing={{ xs: 1, sm: 2, md: 4 }}
+            >
+              {b}
+            </Stack>
+          )}
         </Container>
       </main>
 

@@ -10,7 +10,7 @@ import { maxHeight } from "@mui/system";
 // import IconPython from 'react-devicon/python/plain';
 //import IconAmazonwebservices from 'react-devicon/amazonwebservices/plain-wordmark';
 
-const listWihtIcons: any = {
+const listWithIcons: allInterfaces.iconsInterface = {
   Python:
     "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original-wordmark.svg",
   Dart: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dart/dart-original-wordmark.svg",
@@ -47,14 +47,13 @@ export default function MediaCard({
   projectName,
   listOfProgramLangs,
 }: allInterfaces.ProjectCardContent) {
-
   /* Add more languages for testing */
   // let theLen = listOfProgramLangs.length;
   // for (let index = 0; index < theLen; index++) {
   //   const element = listOfProgramLangs[index];
   //   listOfProgramLangs.push(element);
   // }
-
+  console.log(listOfProgramLangs);
   return (
     <Card
       sx={{ maxWidth: 345 }}
@@ -76,7 +75,7 @@ export default function MediaCard({
               }}
             >
               <img
-                src={listWihtIcons[item.node.name]}
+                src={listWithIcons[item.node.name]}
                 width={55}
                 alt={projectName}
               />

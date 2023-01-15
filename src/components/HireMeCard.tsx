@@ -14,7 +14,7 @@ import LinkedInIcon from "@mui/icons-material/LinkedIn";
 export default function RecipeReviewCard() {
   // maxWidth
   return (
-    <Card sx={{ width: 345 }} style={{ backgroundColor: "#f6ca83" }}>
+    <Card sx={{maxWidth: 345}} style={{ backgroundColor: "#f6ca83" }}>
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">

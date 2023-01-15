@@ -7,7 +7,7 @@ export interface projectIdProps {
   username: string;
   totalContributions: number;
   avatarUrl: string;
-  getTheThingWeNeed: any[];
+  getTheThingWeNeed: object[];
 }
 
 export interface projectIdFilteredData {
@@ -31,11 +31,11 @@ export interface IndexDataProps {
   totalContributions: number;
   avatarUrl: string;
   getTheThingWeNeed: getTheThingWeNeedInterface[];
-  listOfProgramLangs: object[];
+  listOfProgramLangs: edges[];
 }
 
 interface getTheThingWeNeedInterface {
-  languages: { edges: theEdges[]; name: string };
+  languages: languages;
   name: string;
   object: {
     entries: entriesInterface[];
@@ -44,14 +44,20 @@ interface getTheThingWeNeedInterface {
   visibility: string;
 }
 
-interface theEdges{
+interface languages {
+  edges: edges[];
+}
+
+interface edges{
   node: {
     name: string;
   }
 }
 
-interface entriesInterface {
+export interface entriesInterface {
+  name: string;
   object: {
+    text: string;
     name: string;
     object: {
       name: string;
@@ -64,4 +70,30 @@ export interface projectCardItem {
   ymlText: string;
   smallPicUrl: string;
   repoName: string;
+}
+
+export interface oneRepoObjectInterface {
+  repoName: string;
+  ymlText: string;
+  smallPicUrl: string;
+  progLangs: edges[];
+}
+
+export interface iconsInterface {
+  Python: string;
+  Dart: string;
+  CSS: string;
+  HTML: string;
+  JavaScript: string;
+  TypeScript: string;
+  "C#": string;
+  "ASP.NET": string;
+  Kotlin: string;
+  Swift: string;
+  "Objective-C": string;
+  CMake: string;
+  Java: string;
+  Ruby: string;
+  Starlark: string;
+  Cplusplus: string;
 }

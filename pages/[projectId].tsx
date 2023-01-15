@@ -130,8 +130,8 @@ const Home: NextPage<allInterfaces.projectIdProps> = (props) => {
     }
   }
 
-  console.log(dataFromGitHub[0].portfR_M_Text);
-  console.log(props.projectId, "This is props.projectId");
+  //console.log(dataFromGitHub[0].portfR_M_Text);
+  //console.log(props.projectId, "This is props.projectId");
   return (
     // <div className={styles.container}>
     //   {props.projectId}
