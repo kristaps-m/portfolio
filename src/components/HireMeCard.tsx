@@ -12,9 +12,8 @@ import ContactSupportIcon from "@mui/icons-material/ContactSupport";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 
 export default function RecipeReviewCard() {
-  // maxWidth
   return (
-    <Card sx={{maxWidth: 345}} style={{ backgroundColor: "#f6ca83" }}>
+    <Card sx={{ maxWidth: 345 }}>
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
@@ -38,6 +37,7 @@ export default function RecipeReviewCard() {
             href="https://www.linkedin.com/in/kristaps-mitins"
             underline="hover"
             color="text.title"
+            target={"_blank"}
           >
             {"Do you want to hire me?"}
           </Link>

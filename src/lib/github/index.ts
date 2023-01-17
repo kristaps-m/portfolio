@@ -71,7 +71,6 @@ export const getContributions = async (username: string) => {
     headers: headers,
   });
   const data = await response.json();
-  //console.log("---------TEST-----------");
-  //console.log(JSON.stringify(body));
+  
   return data;
 };

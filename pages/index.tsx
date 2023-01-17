@@ -6,7 +6,6 @@ import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import ProjectCard from "../src/components/ProjectCard";
 import { getContributions } from "../src/lib/github/index";
-//import {getContributions2} from '../src/lib/github/index2';
 import { NextPage } from "next";
 import GitHubCalendar from "react-github-calendar";
 import { Box, Container, Grid, Paper, styled } from "@mui/material";
@@ -32,21 +31,21 @@ export async function getServerSideProps() {
       avatarUrl: data.data.user.avatarUrl,
       getTheThingWeNeed: data.data.user.repositories.nodes,
       listOfProgramLangs: data.data.user.repositories,
-      //testData2: data2.data.repository.object.entries
     }, // will be passed to the page component as props
   };
 }
 
 const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#fff" : "#9CAFB7",
+  // backgroundColor: theme.palette.mode === "dark" ? "#fff" : "#9CAFB7",
   ...theme.typography.body2,
   padding: theme.spacing(1),
   textAlign: "center",
   color: theme.palette.text.secondary,
+  height: "250px",
 }));
 
 const Home: NextPage<allInterfaces.IndexDataProps> = (props) => {
-  console.log(props.getTheThingWeNeed);
+  //console.log(props.getTheThingWeNeed);
 
   // The ultimate filter:
   let listOfStringsForProjectCard = [];
@@ -82,36 +81,21 @@ const Home: NextPage<allInterfaces.IndexDataProps> = (props) => {
 
   // https://raw.githubusercontent.com/kristaps-m/ycombinator-data-scraper/master/portfolio.yml
 
-  const smallP_L =
-    "https://raw.githubusercontent.com/kristaps-m/ycombinator-data-scraper/master/portfolio/image-small.png";
-
   /** INCRASE SIZE OF DATA FROM API */
   // const listLen = theListOfTexts.length - 2;
   // for (let index = 0; index < listLen; index++) {
   //   theListOfTexts.push(theListOfTexts[index]);
   // }
 
-  // let test = <>Small Screen!!!!</>;
-  let test = (
-    <Stack
-      direction={{ xs: "column", sm: "row" }}
-      spacing={{ xs: 1, sm: 2, md: 4 }}
-    >
-      <Item>Item 1</Item>
-      <Item>Item 2</Item>
-      <Item>Item 3</Item>
-    </Stack>
-  );
-  //const matches = useMediaQuery("(min-width: 600px)");
   const matches = useMediaQuery("(min-width:600px)");
 
-  const a = (
+  const aboutCreator = (
     <>
       <Grid item xs={4}>
         <Item className={styles.title}>{props.username} </Item>
       </Grid>
-      <Grid item xs={6}>
-        <Item className={styles.description}>
+      <Grid item xs={7}>
+        <Item className={styles.contributions}>
           Total Contributions: {props.totalContributions}
         </Item>
       </Grid>
@@ -120,18 +104,15 @@ const Home: NextPage<allInterfaces.IndexDataProps> = (props) => {
           <img src={props.avatarUrl} alt="Avatar Image :)" width={200} />
         </Item>
       </Grid>
-      <Grid item xs={6}>
-        <Item>
-          <div style={{ backgroundColor: "#ADB993" }}>
-            <p style={{ color: "darkblue" }}></p>
-            <GitHubCalendar username="kristaps-m" />
-          </div>
+      <Grid item xs={7}>
+        <Item>          
+          <GitHubCalendar username="kristaps-m" />
         </Item>
       </Grid>
     </>
   );
 
-  const b = (
+  const displayProjects = (
     <>
       {listOfStringsForProjectCard.map(
         (item: allInterfaces.projectCardItem) => (
@@ -142,10 +123,10 @@ const Home: NextPage<allInterfaces.IndexDataProps> = (props) => {
               projectName={item.repoName}
               listOfProgramLangs={item.progLangs}
             ></ProjectCard>
-            <br></br>
           </Grid>
         )
       )}
+      <br></br>
       <HireMeCard></HireMeCard>
     </>
   );
@@ -167,27 +148,27 @@ const Home: NextPage<allInterfaces.IndexDataProps> = (props) => {
                 rowSpacing={1}
                 columnSpacing={{ xs: 1, sm: 2, md: 3 }}
               >
-                {a}
+                {aboutCreator}
               </Grid>
             ) : (
               <Stack
                 direction={{ xs: "column", sm: "row" }}
                 spacing={{ xs: 1, sm: 2, md: 4 }}
               >
-                {a}
+                {aboutCreator}
               </Stack>
             )}
           </Box>
           <br></br>
           {/* ------------------------CARD---------------------  */}
           {matches ? (
-            <Grid container>{b}</Grid>
+            <Grid container>{displayProjects}</Grid>
           ) : (
             <Stack
               direction={{ xs: "column", sm: "row" }}
               spacing={{ xs: 1, sm: 2, md: 4 }}
             >
-              {b}
+              {displayProjects}
             </Stack>
           )}
         </Container>

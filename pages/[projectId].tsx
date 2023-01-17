@@ -1,7 +1,5 @@
-import styles from "../styles/Home.module.css";
 import * as React from "react";
 import { GetServerSideProps, NextPage, NextPageContext } from "next";
-import { getContributions2 } from "../src/lib/github/index2";
 import { getContributions } from "../src/lib/github";
 import {
   AppBar,
@@ -22,15 +20,12 @@ import Link from "@mui/material/Link";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import InfoIcon from "@mui/icons-material/Info";
 import * as allInterfaces from "../src/interfaces";
-import { red } from "@mui/material/colors";
-//import styled from "styled-components";
-// export const getServerSideProps: GetServerSideProps<Props> = async (context) => {
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
 
 export async function getServerSideProps(context: {
   params: { projectId: string };
 }) {
   const projectId = context?.params?.projectId;
-  // const data = await getContributions2('kristaps-m', `${projectId}`);
   const data = await getContributions("kristaps-m");
   // console.log("BEFORE ----------------------------------");
   // //console.log(context)
@@ -91,7 +86,8 @@ const Home: NextPage<allInterfaces.projectIdProps> = (props) => {
   for (let index = 0; index < props.getTheThingWeNeed.length; index++) {
     if (props.getTheThingWeNeed[index].object.entries.length > 0) {
       //console.log(props.getTheThingWeNeed[index], "\n NODES thig we need");
-      let test = props.getTheThingWeNeed[index].object.entries;
+      let objectEntries: allInterfaces.entriesInterface[] =
+        props.getTheThingWeNeed[index].object.entries;
       let oneRepoObject = {
         repoName: "",
         repoGitUrl: "",
@@ -109,20 +105,20 @@ const Home: NextPage<allInterfaces.projectIdProps> = (props) => {
         "portfReadMeUrl"
       ] = `https://raw.githubusercontent.com/kristaps-m/${oneRepoObject["repoName"]}/master/portfolio/README.md`;
 
-      for (let j = 0; j < test.length; j++) {
+      for (let j = 0; j < objectEntries.length; j++) {
         if (
-          test[j].name === "portfolio.yml" &&
+          objectEntries[j].name === "portfolio.yml" &&
           oneRepoObject["repoName"] === props.projectId
         ) {
-          oneRepoObject["ymlText"] = test[j].object.text;
-          console.log(props.getTheThingWeNeed[index]);
+          oneRepoObject["ymlText"] = objectEntries[j].object.text;
+          //console.log(props.getTheThingWeNeed[index]);
           //console.log(oneRepoObject)
           dataFromGitHub.push(oneRepoObject); // test[j].object.text
-        } else if (test[j].name === "portfolio") {
-          let superDeep = test[j].object.entries;
-          for (let omg = 0; omg < superDeep.length; omg++) {
-            if (superDeep[omg].name === "README.md") {
-              oneRepoObject["portfR_M_Text"] = superDeep[omg].object.text;
+        } else if (objectEntries[j].name === "portfolio") {
+          let superDeep = objectEntries[j].object.entries;
+          for (let i = 0; i < superDeep.length; i++) {
+            if (superDeep[i].name === "README.md") {
+              oneRepoObject["portfR_M_Text"] = superDeep[i].object.text;
             }
           }
         }
@@ -133,16 +129,6 @@ const Home: NextPage<allInterfaces.projectIdProps> = (props) => {
   //console.log(dataFromGitHub[0].portfR_M_Text);
   //console.log(props.projectId, "This is props.projectId");
   return (
-    // <div className={styles.container}>
-    //   {props.projectId}
-    //   <p>THIS IS LINK TO GIT HUB ....<a href={theListOfTexts[0].repoGitUrl}>{theListOfTexts[0].repoName}</a></p>
-    //   <div>
-    //     <img src={theListOfTexts[0].bigPicUrl} alt={props.projectId}></img>
-    //   </div>
-    //   <h3>Description</h3>
-    //   <p>{theListOfTexts[0].portfR_M_Text}</p>
-    // </div>
-
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <AppBar position="relative">
@@ -189,7 +175,14 @@ const Home: NextPage<allInterfaces.projectIdProps> = (props) => {
               <Button variant="contained" href={dataFromGitHub[0].repoGitUrl}>
                 Go to project GitHub
               </Button>
-              <Button variant="outlined">Secondary action</Button>
+              <Button variant="outlined">
+                <Link
+                  href="https://www.linkedin.com/in/kristaps-mitins"
+                  target={"_blank"}
+                >
+                  My LinkedIn
+                </Link>
+              </Button>
             </Stack>
           </Container>
         </Box>
@@ -197,7 +190,7 @@ const Home: NextPage<allInterfaces.projectIdProps> = (props) => {
           {/* CARD */}
           <Box
             sx={{
-              width: 600,
+              maxWidth: "sm",
               backgroundColor: "primary.light",
               "&:hover": {
                 backgroundColor: "primary.main",
@@ -205,23 +198,26 @@ const Home: NextPage<allInterfaces.projectIdProps> = (props) => {
               },
             }}
           >
-            <Card
+            {/* <Card
               sx={{
                 height: "100%",
                 display: "flex",
                 flexDirection: "column",
               }}
-            >
-              <CardMedia
-                component="img"
-                sx={{
-                  // 16:9
-                  pt: "10%",
-                }}
-                image={dataFromGitHub[0].bigPicUrl}
-                alt={props.projectId}
-              />
-              <CardContent sx={{ flexGrow: 1 }}>
+            > */}
+            <CardMedia
+              component="img"
+              sx={{
+                // 16:9
+                pt: "10%",
+                pb: "10%",
+                pr: "5%",
+                pl: "5%",
+              }}
+              image={dataFromGitHub[0].bigPicUrl}
+              alt={props.projectId}
+            />
+            {/* <CardContent sx={{ flexGrow: 1 }}>
                 <Typography gutterBottom variant="h5" component="h2">
                   Heading
                 </Typography>
@@ -233,47 +229,9 @@ const Home: NextPage<allInterfaces.projectIdProps> = (props) => {
               <CardActions>
                 <Button size="small">View</Button>
                 <Button size="small">Edit</Button>
-              </CardActions>
-            </Card>
+              </CardActions> */}
+            {/* </Card> */}
           </Box>
-
-          {/* End hero unit */}
-          {/* <Grid container spacing={4}>
-            {cards.map((card) => (
-              <Grid item key={card} xs={12} sm={6} md={4}>
-                <Card
-                  sx={{
-                    height: "100%",
-                    display: "flex",
-                    flexDirection: "column",
-                  }}
-                >
-                  <CardMedia
-                    component="img"
-                    sx={{
-                      // 16:9
-                      pt: "56.25%",
-                    }}
-                    image={theListOfTexts[0].bigPicUrl}
-                    alt={props.projectId}
-                  />
-                  <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      Heading
-                    </Typography>
-                    <Typography>
-                      This is a media card. You can use this section to describe
-                      the content.
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button size="small">View</Button>
-                    <Button size="small">Edit</Button>
-                  </CardActions>
-                </Card>
-              </Grid>
-            ))}
-          </Grid> */}
         </Container>
       </main>
       {/* Footer */}

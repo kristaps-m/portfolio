@@ -7,8 +7,6 @@ import Typography from "@mui/material/Typography";
 import { Container, Grid, Link } from "@mui/material";
 import * as allInterfaces from "../interfaces";
 import { maxHeight } from "@mui/system";
-// import IconPython from 'react-devicon/python/plain';
-//import IconAmazonwebservices from 'react-devicon/amazonwebservices/plain-wordmark';
 
 const listWithIcons: allInterfaces.iconsInterface = {
   Python:
@@ -53,11 +51,11 @@ export default function MediaCard({
   //   const element = listOfProgramLangs[index];
   //   listOfProgramLangs.push(element);
   // }
-  console.log(listOfProgramLangs);
+  //console.log(listOfProgramLangs);
   return (
     <Card
       sx={{ maxWidth: 345 }}
-      style={{ backgroundColor: "#D0D38F", height: "100%" }}
+      // style={{ backgroundColor: "#D0D38F", height: "100%" }}
     >
       <Container>
         <Grid container style={{ height: "100%" }}>
@@ -88,6 +86,7 @@ export default function MediaCard({
         width="250"
         image={smallPictureLink}
         alt={projectName}
+        style={{ border: "solid 1px gray;" }}
       />
       <ProjectCardContent>
         <Typography gutterBottom variant="h5" component="div">
